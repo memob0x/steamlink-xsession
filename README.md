@@ -1,2 +1,2 @@
-# osmc-emustation-addons
-[Emulation Station](https://emulationstation.org/) addons for [OSMC](https://osmc.tv/)
+# osmc-retropie-addons
+[RetroPie](https://retropie.org.uk/) addons for [OSMC](https://osmc.tv/)
