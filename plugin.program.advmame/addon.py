@@ -9,13 +9,14 @@ __author__ = "toast"
 __url__ = "https://github.com/memob0x/osmc-advmame-launcher/"
 __git_url__ = "https://github.com/memob0x/osmc-advmame-launcher/"
 __credits__ = "toast"
-__version__ = "0.0.12"
+__version__ = "0.0.1"
 
 dialog = xbmcgui.Dialog()
 addon = xbmcaddon.Addon(id='plugin.program.advmame')
 
 def main():
     """Main operations of this plugin."""
+    create_files()
     output = os.popen("sh /tmp/advmame-launcher.sh").read()
     dialog.ok("Starting mslugx...", output)
 

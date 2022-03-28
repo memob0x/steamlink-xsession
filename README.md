@@ -1,2 +1,2 @@
 # osmc-advmame-launcher
-Advance Mame launcher for OSMC
+[Advance Mame](https://www.advancemame.it/) launcher for [OSMC](https://osmc.tv/)
