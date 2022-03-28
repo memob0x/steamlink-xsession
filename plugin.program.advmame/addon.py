@@ -14,17 +14,6 @@ __version__ = "0.0.1"
 dialog = xbmcgui.Dialog()
 addon = xbmcaddon.Addon(id='plugin.program.advmame')
 
-def main():
-    """Main operations of this plugin."""
-    create_files()
-    output = os.popen("sh /tmp/advmame-launcher.sh").read()
-    dialog.ok("Starting mslugx...", output)
+output = os.popen("sh ./launch-emustation.sh").read()
 
-def create_files():
-    """Creates bash files to be used for this plugin."""
-    with open('/tmp/advmame-launcher.sh', 'w') as outfile:
-        outfile.write("""#!/bin/bash
-advmame mslugx"
-""")
-        outfile.close()
-main()
+dialog.ok("Starting Emulation Station...", output)
