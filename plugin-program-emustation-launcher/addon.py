@@ -12,7 +12,7 @@ __credits__ = "toast"
 __version__ = "0.0.1"
 
 dialog = xbmcgui.Dialog()
-addon = xbmcaddon.Addon(id='plugin.program.emustation-addons')
+addon = xbmcaddon.Addon(id='plugin.program.emustation-launcher')
 
 output = os.popen("sh ./launch-emustation.sh").read()
 
