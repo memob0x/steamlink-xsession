@@ -1,4 +1,3 @@
-"""advmame Launcher for OSMC"""
 import os
 import xbmc
 import xbmcgui
@@ -16,4 +15,4 @@ addon = xbmcaddon.Addon(id='plugin.program.emustation-launcher')
 
 output = os.popen("sh ./launch-emustation.sh").read()
 
-# dialog.ok("Starting Emulation Station...", output)
+dialog.ok("Starting Emulation Station...", output)
