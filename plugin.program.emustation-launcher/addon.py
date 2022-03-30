@@ -13,6 +13,17 @@ __version__ = "0.0.1"
 dialog = xbmcgui.Dialog()
 addon = xbmcaddon.Addon(id='plugin.program.emustation-launcher')
 
-output = os.popen("sh ./launch-emustation.sh").read()
+with open('/tmp/emustation-launcher.sh', 'w') as outfile:
+        outfile.write("""#!/bin/bash
 
-dialog.ok("Starting Emulation Station...", output)
+cp launcher.sh /tmp/emustation-launcher.sh
+
+chmod 755 /tmp/emustation-launcher.sh
+
+exit
+
+""")
+
+        outfile.close()
+
+output = os.popen("sh /tmp/emustation-launcher.sh").read()
