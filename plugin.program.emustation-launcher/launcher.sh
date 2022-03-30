@@ -1,13 +1,39 @@
 #!/bin/bash
 
-sudo systemctl stop mediacenter &
+openvt -c 7 -s -f clear
 
-sleep 10
+emustation_launched=false
+mediacenter_stopped=false
 
-export PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/sbin:/usr/sbin:/usr/osmc/bin:/opt/vc/bin
+while true;
+do
+	mediacenter_state="$(systemctl is-active mediacenter)"
+	emustation_state="$(pgrep -f /usr/bin/emulationstation)"
 
-/opt/retropie/supplementary/emulationstation/emulationstation
+	if ( [ "$mediacenter_state" != "active" ] && [ "$emustation_launched" = true ] && [ ! "$emustation_state" ] )
+	then
+		echo "resuming mediacenter"
 
-sudo systemctl start mediacenter
+		sudo systemctl start mediacenter &
 
-exit
+		exit
+	fi
+
+	if ( [ "$mediacenter_state" != "active" ] && [ "$emustation_launched" = false ] )
+	then
+		echo "launching emulation station"
+
+		emustation_launched=true
+
+		/usr/bin/emulationstation &
+	fi
+
+	if ( [ "$mediacenter_state" = "active" ] && [ "$mediacenter_stopped" = false ] )
+        then
+                echo "stopping mediacenter"
+
+		mediacenter_stopped=true
+
+                sudo systemctl stop mediacenter &
+        fi
+done
