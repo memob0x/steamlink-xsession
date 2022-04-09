@@ -1,0 +1,18 @@
+[Unit]
+Description=Steamlink Service
+
+Conflicts=display-manager.service
+
+OnFailure=display-manager.service
+
+[Service]
+User=pi
+Group=pi
+WorkingDirectory=/home/pi
+ExecStart=/usr/bin/steamlink
+Restart=on-failure
+
+ExecStopPost=sudo service lightdm start
+
+[Install]
+WantedBy=default.target

@@ -13,37 +13,8 @@ autologin-session=kodi # or kodi-standalone
 
 ## Installation
 
+Run the installation script.
+
 ```
 sudo sh install.sh
-```
-
-## Manual installation
-
-```bash
-sudo touch /etc/systemd/system/steamlink.service
-
-sudo chmod 664 /etc/systemd/system/steamlink.service
-```
-
-```bash
-[Unit]
-Description=Steamlink Service
-
-Conflicts=display-manager.service
-
-[Service]
-User=pi
-Group=pi
-WorkingDirectory=/home/pi
-ExecStart=/usr/bin/steamlink
-Restart=on-failure
-
-ExecStopPost=sudo service lightdm start
-
-[Install]
-WantedBy=default.target
-```
-
-```bash
-systemctl daemon-reload
 ```
