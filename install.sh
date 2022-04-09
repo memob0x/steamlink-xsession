@@ -1,7 +1,5 @@
-rm -rf ~/.kodi/addons/script.emulation-station-launcher
-rm -rf ~/.kodi/addons/script.lightdm-launcher
+DIR=$(readlink -f "$(dirname "$0")")
+
 rm -rf ~/.kodi/addons/script.steamlink-launcher
 
-cp -r script.emulation-station-launcher ~/.kodi/addons/
-cp -r script.lightdm-launcher ~/.kodi/addons/
-cp -r script.steamlink-launcher ~/.kodi/addons/
+cp -r $DIR/script.steamlink-launcher ~/.kodi/addons/

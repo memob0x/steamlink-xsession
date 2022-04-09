@@ -1,8 +1,19 @@
-import xbmcaddon
-import subprocess
+import os, subprocess
+import xbmcaddon, xbmc, xbmcgui
 
-ADDON = xbmcaddon.Addon()
+addon = xbmcaddon.Addon()
 
-CWD = ADDON.getAddonInfo('path')
+def launch():
 
-subprocess.call(["sh", CWD + "/launcher.sh"])
+	addonPath = addon.getAddonInfo('path')
+
+	cmd = os.path.join(addonPath, 'launcher.sh')
+
+	try:
+		xbmc.log("Launching script %s" % cmd)
+		subprocess.call(["chmod", "+x", cmd])
+		subprocess.call('"' + cmd + '"', shell=True)
+	except:
+		xbmcgui.Dialog().ok("Failed to launch", "Failed to launch script %s" % cmd)
+
+launch()
