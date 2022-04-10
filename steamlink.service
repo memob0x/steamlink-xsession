@@ -7,10 +7,9 @@ OnFailure=display-manager.service
 
 [Service]
 User=pi
-Group=pi
-WorkingDirectory=/home/pi
 ExecStart=/usr/bin/steamlink
-Restart=on-failure
+
+Environment="XDG_RUNTIME_DIR=/run/user/1000" # TODO: check, should probably be dynamic
 
 ExecStopPost=sudo service lightdm start
 
