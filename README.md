@@ -3,13 +3,12 @@
 
 ## Installation
 
-Run the installation script.
+1. Run the installation script.
 
-```
-sh install.sh
-```
-
-Activate the addons from the Kodi GUI (an activation request should be prompted on the next kodi startup).
+   ```bash
+   sh install.sh
+   ```
+2. Activate the addons from the Kodi GUI (an activation request should be prompted on the next kodi startup).
 
 ## Extras
 
