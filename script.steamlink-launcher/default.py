@@ -1,11 +1,5 @@
-import subprocess
-import xbmcaddon, xbmc
+import xbmc, subprocess
 
-addon = xbmcaddon.Addon()
+xbmc.executebuiltin('ActivateWindow(busydialognocancel)')
 
-def launch():
-	xbmc.executebuiltin('ActivateWindow(busydialognocancel)')
-
-	subprocess.call(["sudo", "service", "steamlink", "start"])
-
-launch()
+subprocess.call(["sudo", "service", "steamlink", "start"])

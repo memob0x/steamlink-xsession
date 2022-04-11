@@ -8,5 +8,15 @@
 		<description lang="en_GB">A script to connect, pair and trust the bluetooth devices MAC addresses specified in the addon settings</description>
 		<language></language>
 		<platform>all</platform>
+		<assets>
+        	        <icon>resources/icon.png</icon>
+	                <fanart></fanart>
+                	<banner></banner>
+        	        <clearlogo></clearlogo>
+	                <screenshot></screenshot>
+        	        <screenshot></screenshot>
+	                <screenshot></screenshot>
+                	<screenshot></screenshot>
+        	</assets>
 	</extension>
 </addon>
