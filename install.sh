@@ -15,3 +15,9 @@ sudo cp $DIR/steamlink.service /etc/systemd/system/
 sudo chmod 664 /etc/systemd/system/steamlink.service
 
 sudo systemctl daemon-reload
+
+# bt refresher addon installation
+
+rm -rf ~/.kodi/addons/script.bt-devices-connector
+
+cp -r $DIR/script.bt-devices-connector ~/.kodi/addons/

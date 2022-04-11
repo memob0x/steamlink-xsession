@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.bt-devices-connector" name="Connect Bluetooth Devices" version="0.0.1" provider-name="me">
+	<extension point="xbmc.python.script" library="default.py">
+		<provides>executable</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en_GB">Connect to given bluetooth devices MAC addresses</summary>
+		<description lang="en_GB">A script to connect, pair and trust given bluetooth devices MAC addresses</description>
+		<language></language>
+		<platform>all</platform>
+	</extension>
+</addon>
