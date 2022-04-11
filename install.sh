@@ -1,28 +1,23 @@
 #!/bin/sh
 
-DIR=$(readlink -f "$(dirname "$0")")
+DIR_PROJECT=$(readlink -f "$(dirname "$0")")
+DIR_KODI_ADDONS=~/.kodi/addons
+DIR_SYSTEMD=/etc/systemd/system
 
-# kodi addon installation
-# --------------------------------------------------------------
+for addon in "script.steamlink-launcher" "script.bluetooth-devices-connector"
+do
+	rm -r $DIR_KODI_ADDONS/$addon
 
-rm -rf ~/.kodi/addons/script.steamlink-launcher
+	cp -r $DIR_PROJECT/$addon $DIR_KODI_ADDONS
+done
 
-cp -r $DIR/script.steamlink-launcher ~/.kodi/addons/
+for service in "steamlink.service"
+do
+	sudo rm $DIR_SYSTEMD/$service
 
-# steamlink systemd service installation
-# --------------------------------------------------------------
+	sudo cp $DIR_PROJECT/$service $DIR_SYSTEMD
 
-sudo rm /etc/systemd/system/steamlink.service
-
-sudo cp $DIR/steamlink.service /etc/systemd/system/
-
-sudo chmod 664 /etc/systemd/system/steamlink.service
+	sudo chmod 664 $DIR_SYSTEMD/$service
+done
 
 sudo systemctl daemon-reload
-
-# bluetooth devices connector addon installation
-# --------------------------------------------------------------
-
-rm -rf ~/.kodi/addons/script.bluetooth-devices-connector
-
-cp -r $DIR/script.bluetooth-devices-connector ~/.kodi/addons/
