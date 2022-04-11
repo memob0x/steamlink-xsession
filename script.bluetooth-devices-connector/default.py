@@ -15,17 +15,15 @@ def main():
 	report = ""
 
 	for dev in devs:
-		result = connectDevice(dev, 4)
-
 		status = ""
 
-		if result:
+		if connectDevice(dev, 4):
 			status = "Connected"
 		else:
 			status = "Failed"
 
-		report = report + dev + ": " + status + " (Result: " + str(result) + ")\n"
+		report = report + dev + ": " + status + "\n"
 
-	xbmcgui.Dialog().ok("Refresh report:", report)
+	xbmcgui.Dialog().ok("Devices connection report:", report)
 
 main()

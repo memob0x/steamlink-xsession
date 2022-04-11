@@ -16,5 +16,5 @@ autologin-session=kodi # or kodi-standalone
 Run the installation script.
 
 ```
-sudo sh install.sh
+sh install.sh
 ```

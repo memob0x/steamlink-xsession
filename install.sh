@@ -1,12 +1,16 @@
+#!/bin/sh
+
 DIR=$(readlink -f "$(dirname "$0")")
 
 # kodi addon installation
+# --------------------------------------------------------------
 
 rm -rf ~/.kodi/addons/script.steamlink-launcher
 
 cp -r $DIR/script.steamlink-launcher ~/.kodi/addons/
 
 # steamlink systemd service installation
+# --------------------------------------------------------------
 
 sudo rm /etc/systemd/system/steamlink.service
 
@@ -16,7 +20,8 @@ sudo chmod 664 /etc/systemd/system/steamlink.service
 
 sudo systemctl daemon-reload
 
-# bt refresher addon installation
+# bluetooth devices connector addon installation
+# --------------------------------------------------------------
 
 rm -rf ~/.kodi/addons/script.bluetooth-devices-connector
 
