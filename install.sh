@@ -18,6 +18,6 @@ sudo systemctl daemon-reload
 
 # bt refresher addon installation
 
-rm -rf ~/.kodi/addons/script.bt-devices-connector
+rm -rf ~/.kodi/addons/script.bluetooth-devices-connector
 
-cp -r $DIR/script.bt-devices-connector ~/.kodi/addons/
+cp -r $DIR/script.bluetooth-devices-connector ~/.kodi/addons/
