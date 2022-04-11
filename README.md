@@ -12,10 +12,12 @@ Run the installation script.
 sh install.sh
 ```
 
-## Extra
+## Extras
 
 ### Kodi at boot
-According to the current [specifications](https://salsa.debian.org/multimedia-team/kodi-media-center/kodi/-/commit/7a371bfd9daf9>```bash
+According to the current [specifications](https://salsa.debian.org/multimedia-team/kodi-media-center/kodi/-/commit/7a371bfd9daf9>
+
+```bash
 autologin-user=pi # your user of choice
 autologin-session=kodi # or kodi-standalone
 ```
