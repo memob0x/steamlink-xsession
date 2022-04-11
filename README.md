@@ -1,5 +1,5 @@
 # kodi-respbian-addons
-[Kodi](https://kodi.wiki/view/HOW-TO:Install_Kodi_on_Raspberry_Pi) addons on [Raspbian](https://www.raspberrypi.com/software/) environment
+[Kodi](https://kodi.wiki/view/HOW-TO:Install_Kodi_on_Raspberry_Pi) [19](https://kodi.tv/article/kodi-matrix-19-4-release/) addons on [Raspbian](https://www.raspberrypi.com/software/) [bullseye](https://www.raspberrypi.com/news/raspberry-pi-os-debian-bullseye/) environment
 
 ## Installation
 
@@ -8,7 +8,7 @@
    ```bash
    sh install.sh
    ```
-2. Activate the addons from Kodi (an activation request should be prompted on the next boot).
+2. Activate the addons from Kodi GUI.
 
 ## Extras
 
