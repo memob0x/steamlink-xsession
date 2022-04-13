@@ -1,0 +1,5 @@
+[Desktop Entry]
+Name=Chromium Browser
+Comment=This session will start Chromium Browser
+Exec=chromium-browser --kiosk
+Type=Application

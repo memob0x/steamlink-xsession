@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.kiosk-browser-launcher" name="Browser" version="0.0.1" provider-name="me">
+	<extension point="xbmc.python.script" library="default.py">
+		<provides>executable</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en_GB">Launch Web Browser from Kodi</summary>
+		<description lang="en_GB">A script to launch Web Browser directly from kodi</description>
+		<language></language>
+		<platform>all</platform>
+                <assets>
+                        <icon>resources/icon.png</icon>
+                        <fanart></fanart>
+                        <banner></banner>
+                        <clearlogo></clearlogo>
+                        <screenshot></screenshot>
+                        <screenshot></screenshot>
+                        <screenshot></screenshot>
+                        <screenshot></screenshot>
+                </assets>
+	</extension>
+</addon>
