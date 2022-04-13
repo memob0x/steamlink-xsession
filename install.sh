@@ -5,18 +5,16 @@ DIR_PROJECT=$(readlink -f "$(dirname "$0")")
 DIR_KODI_ADDONS=~/.kodi/addons
 DIR_SYSTEMD=/etc/systemd/system
 DIR_XSESSIONS=/usr/share/xsessions
+FILE_LIGHTDM=/etc/lightdm/lightdm.conf
 
-# lightdm kodi autologin seat configuration
-sudo sh -c "perl -0777 -pi -e 's/#kodi-autologin-start.*#kodi-autologin-end//gs' /etc/lightdm/lightdm.conf"
-sudo sh -c "echo '#kodi-autologin-start' >> /etc/lightdm/lightdm.conf"
-sudo sh -c "cat kodi-autologin.conf >> /etc/lightdm/lightdm.conf"
-sudo sh -c "echo '#kodi-autologin-end' >> /etc/lightdm/lightdm.conf"
-
-# lightdm kiosk-browser autologin seat configuration
-sudo sh -c "perl -0777 -pi -e 's/#kiosk-browser-autologin-start.*#kiosk-browser-autologin-end//gs' /etc/lightdm/lightdm.conf"
-sudo sh -c "echo '#kiosk-browser-autologin-start' >> /etc/lightdm/lightdm.conf"
-sudo sh -c "cat kiosk-browser-autologin.conf >> /etc/lightdm/lightdm.conf"
-sudo sh -c "echo '#kiosk-browser-autologin-end' >> /etc/lightdm/lightdm.conf"
+# lightdm seats configuration
+for seat in "kodi-autologin" "kiosk-browser-autologin"
+do
+	sudo sh -c "perl -0777 -pi -e 's/#$seat-start.*#$seat-end//gs' $FILE_LIGHTDM"
+	sudo sh -c "echo '#$seat-start' >> $FILE_LIGHTDM"
+	sudo sh -c "cat $seat.conf >> $FILE_LIGHTDM"
+	sudo sh -c "echo '#$seat-end' >> $FILE_LIGHTDM"
+done
 
 # kodi addons installation
 for addon in "script.steamlink-launcher" "script.bluetooth-devices-connector" "script.kiosk-browser-launcher"
