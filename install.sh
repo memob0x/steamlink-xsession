@@ -9,6 +9,10 @@ FILE_LIGHTDM=/etc/lightdm/lightdm.conf
 DIR_BIN=/home/pi/bin
 
 # bin files installation
+if [ ! -d $DIR_BIN ]; then
+  mkdir $DIR_BIN
+fi
+
 for bin in "kodi-autologin.conf" "kiosk-browser-autologin.conf" "set-lightdm-autologin.sh" "kiosk-browser-launcher.sh"
 do
 	rm -r $DIR_BIN/$bin
