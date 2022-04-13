@@ -25,7 +25,7 @@ do
 done
 
 # systemd services installation
-for service in "steamlink.service" "kiosk-browser.service"
+for service in "steamlink.service"
 do
 	sudo rm $DIR_SYSTEMD/$service
 
