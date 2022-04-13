@@ -1,5 +1,6 @@
-import xbmc, subprocess
+import xbmc
+from utils import launchKioskBrowser
 
 xbmc.executebuiltin('ActivateWindow(busydialognocancel)')
 
-subprocess.call(["sudo", "service", "kiosk-browser", "start"])
+launchKioskBrowser()

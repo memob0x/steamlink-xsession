@@ -1,5 +1,6 @@
 [Desktop Entry]
-Name=Chromium Browser
-Comment=This session will start Chromium Browser
-Exec=chromium-browser --kiosk
+Name=Kiosk Browser
+Comment=This session will start Browser Kiosk
+Exec=sh /home/pi/bin/kiosk-browser-launcher.sh
 Type=Application
+Terminal=false
