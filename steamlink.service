@@ -10,7 +10,8 @@ User=pi
 Group=pi
 ExecStart=/usr/bin/steamlink
 
-Environment="XDG_RUNTIME_DIR=/run/user/1000" # TODO: check, should probably be dynamic
+# TODO: should be dynamic
+Environment="XDG_RUNTIME_DIR=/run/user/1000"
 
 ExecStopPost=sudo service lightdm start
 
