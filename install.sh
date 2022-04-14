@@ -20,11 +20,15 @@ do
         cp -r $DIR_PROJECT/bin/$bin $DIR_BIN
 done
 
+# conf files installation
 for conf in "kodi-autologin.conf" "kiosk-browser-autologin.conf"
 do
         rm -r $DIR_CONF/$conf
         cp -r $DIR_PROJECT/config/$conf $DIR_CONF
 done
+
+# setting kodi lightdm autologin
+sh $DIR_BIN/set-lightdm-autologin.sh kodi
 
 # kodi addons installation
 for addon in "script.steamlink-launcher" "script.bluetooth-devices-connector" "script.kiosk-browser-launcher"
