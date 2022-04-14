@@ -1,17 +1,16 @@
 # RKMC
 
-RKMD stands for Raspbian Kodi Media Center, which basically consists in my personal setup script for a
+RKMC stands for Raspbian Kodi Media Center, which basically consists in my personal setup script for a
 [Kodi](https://kodi.wiki/view/HOW-TO:Install_Kodi_on_Raspberry_Pi)-first [Raspbian](https://www.raspberrypi.com/software/) environment.
 
 ## Requirements
-- Raspbian [bullseye](https://www.raspberrypi.com/news/raspberry-pi-os-debian-bullseye/)
+The project is designed to work with Kodi 19 on top of Raspbian [bullseye](https://www.raspberrypi.com/news/raspberry-pi-os-debian-bullseye/) with LightDM, its default display manager.
 
 ## Features
-- kodi startup at boot
-- kodi chromium launcher addon
-- kodi steamlink launcher addon
-- kodi bluetooth pairing addon
-- some other script and services goodies
+- **kodi startup at boot**
+- **kodi chromium launcher addon**: switches off kodi and runs chromium, restarts kodi on chromium exit
+- **kodi steamlink launcher addon**: switches off kodi and runs steamlink, restarts kodi on steamlink exit
+- **kodi bluetooth pairing addon**: connects your devices MAC address; comes with a systemd timer which automatically reconnects them when they go off, quite handy for game controllers
 
 ## Installation
 
