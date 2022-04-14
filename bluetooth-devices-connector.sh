@@ -7,7 +7,11 @@ for dev in $devs
 do
 	info=`bluetoothctl info $dev`
 
-	if echo "$info" | grep -q "Connected: no"; then
+	if echo "$info" | grep -Po "Connected: no|Paired: noe"; then
+		bluetoothctl pair $dev
+
+		bluetoothctl trust $dev
+
 		bluetoothctl connect $dev
 	fi
 done

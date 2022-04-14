@@ -21,7 +21,7 @@ done
 
 # crons installation
 crontab -l|perl -0777 -p -e 's/#bt-cron-start.*#bt-cron-end//gs'|crontab -
-echo "$(crontab -l)\n#bt-cron-start\n*/15 * * * * sh $DIR_BIN/bluetooth-devices-connector.sh\n#bt-cron-end"|crontab -
+echo "$(crontab -l)\n#bt-cron-start\n*/6 * * * * /usr/bin/sh $DIR_BIN/bluetooth-devices-connector.sh\n#bt-cron-end"|crontab -
 
 # removes extra ending new line (probably left by perl)
 # otherwise new lines would increase indefinitely with the use of this script
