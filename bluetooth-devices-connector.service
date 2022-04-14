@@ -1,0 +1,9 @@
+[Unit]
+Description=Execute script.bluetooth-devices-connector kodi addon
+
+[Service]
+Type=oneshot
+ExecStart=kodi-send --action='RunScript("/home/pi/.kodi/addons/script.bluetooth-devices-connector/service.py")'
+
+[Install]
+WantedBy=multi-user.target

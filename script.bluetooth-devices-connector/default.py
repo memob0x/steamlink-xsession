@@ -2,7 +2,7 @@ import xbmcaddon, xbmc, xbmcgui
 
 from utils import connectDevice
 
-addon = xbmcaddon.Addon()
+addon = xbmcaddon.Addon("script.bluetooth-devices-connector")
 
 devs = addon.getSettingString("devs").split(",")
 

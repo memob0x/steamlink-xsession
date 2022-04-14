@@ -3,7 +3,13 @@
 
 ## Installation
 
-1. Run the installation script.
+1. Install the required dependencies.
+
+   ```bash
+   sudo apt-get install kodi-eventclients-kodi-send
+   ```
+
+2. Run the installation script.
 
    ```bash
    sh install.sh
