@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.kiosk-browser-launcher" name="Browser" version="0.0.1" provider-name="memob0x">
+<addon id="script.chromium-launcher" name="Chromium" version="0.0.1" provider-name="memob0x">
 	<extension point="xbmc.python.script" library="default.py">
 		<provides>executable</provides>
 	</extension>
 	<extension point="xbmc.addon.metadata">
-		<summary lang="en_GB">Launch Web Browser from Kodi</summary>
-		<description lang="en_GB">A script to launch Web Browser directly from kodi</description>
+		<summary lang="en_GB">Launch Chromium Browser from Kodi</summary>
+		<description lang="en_GB">A script to launch Chromium Browser directly from kodi</description>
 		<language></language>
 		<platform>all</platform>
                 <assets>

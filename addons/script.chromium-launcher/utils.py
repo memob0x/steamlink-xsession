@@ -6,7 +6,7 @@ def launchEnv(env):
 	subprocess.call(["sudo", "service", "lightdm", "restart"])
 
 def launchKioskBrowser():
-	launchEnv("kiosk-browser")
+	launchEnv("chromium-browser")
 
 def launchKodi():
 	launchEnv("kodi")

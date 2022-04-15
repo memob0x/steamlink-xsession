@@ -1,7 +1,7 @@
 #!/bin/sh
 
 FILE_LIGHTDM=/etc/lightdm/lightdm.conf
-opts="kodi kiosk-browser"
+opts="kodi chromium-browser"
 suffix="autologin"
 suffix_start="$suffix-start"
 suffix_end="$suffix-end"
