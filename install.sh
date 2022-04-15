@@ -1,64 +1,45 @@
 #!/bin/sh
 
-# variables
-DIR_PROJECT=$(readlink -f "$(dirname "$0")")
-DIR_KODI_ADDONS=/home/pi/.kodi/addons
-DIR_SYSTEMD=/etc/systemd/system
-DIR_XSESSIONS=/usr/share/xsessions
-FILE_LIGHTDM=/etc/lightdm/lightdm.conf
-DIR_BIN=/home/pi/bin
-DIR_CONF=/home/pi/.config
+cwd=$(readlink -f "$(dirname "$0")")
 
-# bin files installation
+. $cwd/common.sh
+
+. $cwd/uninstall.sh
+
+. $cwd/bin/lightdm-autologin.sh
+
 if [ ! -d $DIR_BIN ]; then
 	mkdir $DIR_BIN
 fi
 
-for bin in "set-lightdm-autologin.sh" "kiosk-browser-launcher.sh"
+for bin in $LIST_SCRIPTS
 do
-	rm -r $DIR_BIN/$bin
-        cp -r $DIR_PROJECT/bin/$bin $DIR_BIN
+        cp -r $cwd/bin/$bin $DIR_BIN
 done
 
-# conf files installation
-for conf in "kodi-autologin.conf" "kiosk-browser-autologin.conf"
+for conf in $LIST_CONFIGS
 do
-        rm -r $DIR_CONF/$conf
-        cp -r $DIR_PROJECT/config/$conf $DIR_CONF
+        cp -r $cwd/config/$conf $DIR_CONF
 done
 
-# setting kodi lightdm autologin
-sh $DIR_BIN/set-lightdm-autologin.sh kodi
+autologin_install kodi
 
-# kodi addons installation
-for addon in "script.steamlink-launcher" "script.bluetooth-devices-connector" "script.kiosk-browser-launcher"
+for addon in $LIST_ADDONS
 do
-	rm -rf $DIR_KODI_ADDONS/$addon
-	cp -r $DIR_PROJECT/$addon $DIR_KODI_ADDONS
+	cp -r $cwd/addons/$addon $DIR_KODI_ADDONS
 done
 
-# xsessions installation
-for session in "kiosk-browser.desktop"
+for session in $LIST_XSESSIONS
 do
-        sudo rm $DIR_XSESSIONS/$session
-        sudo cp $DIR_PROJECT/xsessions/$session $DIR_XSESSIONS
+        sudo cp $cwd/xsessions/$session $DIR_XSESSIONS
 done
 
-# systemd halting
-sudo systemctl stop bluetooth-devices-connector.timer
-sudo systemctl disable bluetooth-devices-connector.timer
-
-# systemd services installation
-for service in "steamlink.service" "bluetooth-devices-connector.service" "bluetooth-devices-connector.timer"
+for service in $LIST_SYSTEMDS
 do
-        sudo rm $DIR_SYSTEMD/$service
-        sudo cp $DIR_PROJECT/systemd/$service $DIR_SYSTEMD
+        sudo cp $cwd/systemd/$service $DIR_SYSTEMD
         sudo chmod 664 $DIR_SYSTEMD/$service
 done
 
-# systemd resuming
-sudo systemctl enable bluetooth-devices-connector.timer
-sudo systemctl start bluetooth-devices-connector.timer
+systemds_reload
 
-# systemd reload
-sudo systemctl daemon-reload
+systemds_activate
