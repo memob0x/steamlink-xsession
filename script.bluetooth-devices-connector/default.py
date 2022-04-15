@@ -6,6 +6,9 @@ addon = xbmcaddon.Addon("script.bluetooth-devices-connector")
 
 devs = addon.getSettingString("devs").split(",")
 
+def getReport(dev, status):
+	return dev + ": " + status
+
 def main():
 	ok = xbmcgui.Dialog().ok("Connecting bluetooth devices", "Just make sure they're ready for pairing. \n" + str(devs))
 
@@ -14,15 +17,17 @@ def main():
 
 	report = ""
 
-	for dev in devs:
-		status = ""
+	def onSuccess(d):
+		nonlocal report
 
-		if connectDevice(dev, 4):
-			status = "Connected"
-		else:
-			status = "Failed"
+		report = report + getReport(d, "Success")
 
-		report = report + dev + ": " + status + "\n"
+	def onError(d):
+		nonlocal report
+
+		report = report + getReport(d, "Failed")
+
+	connectDevice(devs, 4, onSuccess, onError)
 
 	xbmcgui.Dialog().ok("Devices connection report:", report)
 

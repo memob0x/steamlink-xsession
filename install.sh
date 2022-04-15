@@ -33,7 +33,7 @@ sh $DIR_BIN/set-lightdm-autologin.sh kodi
 # kodi addons installation
 for addon in "script.steamlink-launcher" "script.bluetooth-devices-connector" "script.kiosk-browser-launcher"
 do
-	rm -r $DIR_KODI_ADDONS/$addon
+	rm -rf $DIR_KODI_ADDONS/$addon
 	cp -r $DIR_PROJECT/$addon $DIR_KODI_ADDONS
 done
 
