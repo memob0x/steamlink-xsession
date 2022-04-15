@@ -3,8 +3,7 @@
 RKMC stands for Raspbian Kodi Media Center, which basically consists in my personal setup script for a
 [Kodi](https://kodi.wiki/view/HOW-TO:Install_Kodi_on_Raspberry_Pi)-first [Raspbian](https://www.raspberrypi.com/software/) environment.
 
-## Requirements
-The project is designed to work with Kodi 19 on top of Raspbian [bullseye](https://www.raspberrypi.com/news/raspberry-pi-os-debian-bullseye/) with LightDM, its default display manager.
+The project is designed to work with Kodi 19 on top of Raspbian [bullseye](https://www.raspberrypi.com/news/raspberry-pi-os-debian-bullseye/) with LightDM as display manager.
 
 ## Features
 - **kodi startup at boot**
@@ -19,7 +18,7 @@ The project is designed to work with Kodi 19 on top of Raspbian [bullseye](https
    ```bash
    sudo apt install kodi snapd steamlink
    
-   sudo snap install core
+   sudo snap install core spotify-qt spotifyd
    ```
 
 2. Run the installation script.
