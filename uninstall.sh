@@ -4,8 +4,6 @@ cwd=$(readlink -f "$(dirname "$0")")
 
 . $cwd/common.sh
 
-. $cwd/bin/lightdm-autologin.sh
-
 autologin_uninstall
 
 for bin in $LIST_SCRIPTS
@@ -21,11 +19,6 @@ done
 for addon in $LIST_ADDONS
 do
 	sudo rm -rf $DIR_KODI_ADDONS/$addon
-done
-
-for session in $LIST_XSESSIONS
-do
-        sudo rm $DIR_XSESSIONS/$session
 done
 
 systemds_deactivate

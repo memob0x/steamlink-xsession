@@ -15,9 +15,7 @@ get_ls ()
 }
 
 LIST_SCRIPTS=$(get_ls $cwd/bin)
-LIST_CONFIGS=$(get_ls $cwd/config)
 LIST_ADDONS=$(get_ls $cwd/addons)
-LIST_XSESSIONS=$(get_ls $cwd/xsessions)
 LIST_SYSTEMDS=$(get_ls $cwd/systemd)
 
 systemds_activate ()
@@ -35,4 +33,32 @@ systemds_deactivate ()
 systemds_reload ()
 {
 	sudo systemctl daemon-reload
+}
+
+suffix="rkmc-autologin"
+suffix_start="$suffix-start"
+suffix_end="$suffix-end"
+
+autologin_clean ()
+{
+	# removes extra ending new line (probably left by perl)
+        # otherwise new lines would increase indefinitely with the use of this script
+        sudo sh -c "sed -zi 's/\n$//' $FILE_LIGHTDM >> $FILE_LIGHTDM"
+}
+
+autologin_uninstall ()
+{
+	sudo sh -c "perl -0777 -pi -e 's/#$suffix_start.*#$suffix_end//gs' $FILE_LIGHTDM"
+
+	autologin_clean
+}
+
+autologin_install ()
+{
+        sudo sh -c "echo '#$suffix_start' >> $FILE_LIGHTDM"
+        sudo sh -c "echo 'autologin-user=pi' >> $FILE_LIGHTDM"
+	sudo sh -c "echo 'autologin-session=$1' >> $FILE_LIGHTDM"
+        sudo sh -c "echo '#$suffix_end' >> $FILE_LIGHTDM"
+
+	autologin_clean
 }

@@ -6,8 +6,6 @@ cwd=$(readlink -f "$(dirname "$0")")
 
 . $cwd/uninstall.sh
 
-. $cwd/bin/lightdm-autologin.sh
-
 if [ ! -d $DIR_BIN ]; then
 	mkdir $DIR_BIN
 fi
@@ -15,11 +13,6 @@ fi
 for bin in $LIST_SCRIPTS
 do
         cp -r $cwd/bin/$bin $DIR_BIN
-done
-
-for conf in $LIST_CONFIGS
-do
-        cp -r $cwd/config/$conf $DIR_CONF
 done
 
 autologin_install kodi

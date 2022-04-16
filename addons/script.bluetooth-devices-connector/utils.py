@@ -54,13 +54,13 @@ def connectDevice(dev, onSuccess = noop, onError = noop):
 def connectDeviceWithRetry(dev, attempts, onSuccess, onError):
 	if type(dev) == list:
 		def predicate(x):
-			connectDeviceWithRetrye(x, attempts, onSuccess, onError)
+			connectDeviceWithRetry(x, attempts, onSuccess, onError)
 
 		return list(map(predicate, dev))
 
 	i = 0
 
-	while not connectDevice(dev, attempts, onSuccess, onError):
+	while not connectDevice(dev, onSuccess, onError):
 		if i == attempts:
 			return False
 

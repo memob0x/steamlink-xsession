@@ -1,6 +1,0 @@
-[Desktop Entry]
-Name=Chromium Browser
-Comment=This session will start Chromium Browser
-Exec=sh /home/pi/bin/chromium-browser-launcher.sh
-Type=Application
-Terminal=false

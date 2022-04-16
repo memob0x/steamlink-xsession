@@ -7,8 +7,7 @@ The project is designed to work with Kodi 19 on top of Raspbian [bullseye](https
 
 ## Features
 - **kodi startup at boot**
-- **kodi chromium launcher addon**: switches off kodi and runs chromium, restarts kodi on chromium exit
-- **kodi steamlink launcher addon**: switches off kodi and runs steamlink, restarts kodi on steamlink exit
+- **kodi steamlink launcher addon**: since steamlink is not compatible with X server, this addon switches off the display manager and runs steamlink, then, on steamlink exit, restarts it
 - **kodi bluetooth pairing addon**: connects your devices MAC address; comes with a systemd timer which automatically reconnects them when they go off, quite handy for game controllers
 
 ## Installation

@@ -1,6 +1,6 @@
 import xbmcaddon, xbmc, time
 
-from utils import deleteFile, writeFile, disconnectDevice, connectDevice
+from utils import deleteFile, writeFile
 
 addon = xbmcaddon.Addon("script.bluetooth-devices-connector")
 
@@ -8,10 +8,6 @@ file = addon.getAddonInfo('path') + "/devs.txt"
 
 deleteFile(file)
 
-devs = addon.getSettingString("devs")
+devs_raw = addon.getSettingString("devs")
 
-writeFile(file, devs)
-
-disconnectDevice(devs)
-
-connectDevice(devs)
+writeFile(file, devs_raw)
