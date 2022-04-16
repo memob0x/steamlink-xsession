@@ -14,7 +14,6 @@ get_ls ()
 	echo $(ls -1 $1)
 }
 
-LIST_SCRIPTS=$(get_ls $cwd/bin)
 LIST_ADDONS=$(get_ls $cwd/addons)
 LIST_SYSTEMDS=$(get_ls $cwd/systemd)
 

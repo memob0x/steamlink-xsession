@@ -6,15 +6,6 @@ cwd=$(readlink -f "$(dirname "$0")")
 
 . $cwd/uninstall.sh
 
-if [ ! -d $DIR_BIN ]; then
-	mkdir $DIR_BIN
-fi
-
-for bin in $LIST_SCRIPTS
-do
-        cp -r $cwd/bin/$bin $DIR_BIN
-done
-
 autologin_install kodi
 
 for addon in $LIST_ADDONS

@@ -8,7 +8,12 @@ OnFailure=display-manager.service
 [Service]
 User=pi
 Group=pi
-ExecStart=/usr/bin/sh /home/pi/bin/steamlink-launcher.sh
+
+Environment="XDG_RUNTIME_DIR=/run/user/1000"
+
+ExecStartPre=sudo service lightdm stop
+
+ExecStart=sudo -u pi -E /usr/bin/steamlink
 
 ExecStopPost=sudo service lightdm start
 
