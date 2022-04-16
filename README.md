@@ -16,9 +16,7 @@ The project is designed to work with Kodi 19 on top of Raspbian [bullseye](https
 1. Install the required dependencies.
 
    ```bash
-   sudo apt install kodi snapd steamlink
-   
-   sudo snap install core spotify-qt spotifyd
+   sudo apt install kodi steamlink
    ```
 
 2. Run the installation script.
