@@ -15,10 +15,19 @@ def exeBtCmd(action, dev):
 def isDeviceState(state, dev):
 	return state + ": yes" in exeBtCmd("info", dev)
 
-def connectDevice(dev, attempts = 0, onSuccess = noop, onError = noop):
+def disconnectDevice(dev):
 	if type(dev) == list:
 		def predicate(x):
-			connectDevice(x, attempts, onSuccess, onError)
+			disconnectDevice(x)
+
+		return list(map(predicate, dev))
+
+	exeBtCmd("disconnect", dev)
+
+def connectDevice(dev, onSuccess = noop, onError = noop):
+	if type(dev) == list:
+		def predicate(x):
+			connectDevice(x, onSuccess, onError)
 
 		return list(map(predicate, dev))
 
@@ -27,21 +36,33 @@ def connectDevice(dev, attempts = 0, onSuccess = noop, onError = noop):
 
 		return True
 
-	i = 0
+	if not "Connection successful" in exeBtCmd("connect", dev):
+		onError(dev)
 
-	while not "Connection successful" in exeBtCmd("connect", dev):
-		if i == attempts:
-			onError(dev)
-
-			return False
-
-		i = i + 1
+		return False
 
 	exeBtCmd("pair", dev)
 
 	exeBtCmd("trust", dev)
 
 	onSuccess(dev)
+
+	return True
+
+def connectDeviceWithRetry(dev, attempts, onSuccess, onError):
+	if type(dev) == list:
+		def predicate(x):
+			connectDeviceWithRetrye(x, attempts, onSuccess, onError)
+
+		return list(map(predicate, dev))
+
+	i = 0
+
+	while not connectDevice(dev, attempts, onSuccess, onError):
+		if i == attempts:
+			return False
+
+		i = i + 1
 
 	return True
 
@@ -68,3 +89,7 @@ def readFile(path):
 	data.close()
 
 	return contents
+
+def deleteFile(path):
+	if exists(path):
+		os.remove(path)

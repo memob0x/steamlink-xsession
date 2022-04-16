@@ -10,8 +10,12 @@ User=pi
 Group=pi
 ExecStart=/usr/bin/steamlink
 
-# TODO: should be dynamic
+# TODO: check, folder should probably be dynamic
 Environment="XDG_RUNTIME_DIR=/run/user/1000"
+
+# TODO: check, which one of the following vars are mandatory and why
+Environment="XDG_SESSION_TYPE=x11"
+Environment="QT_QPA_EGLFS_KMS_ATOMIC=1"
 
 ExecStopPost=sudo service lightdm start
 

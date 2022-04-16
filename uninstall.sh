@@ -20,7 +20,7 @@ done
 
 for addon in $LIST_ADDONS
 do
-	rm -rf $DIR_KODI_ADDONS/$addon
+	sudo rm -rf $DIR_KODI_ADDONS/$addon
 done
 
 for session in $LIST_XSESSIONS

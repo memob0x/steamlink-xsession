@@ -1,6 +1,6 @@
 import xbmcaddon, xbmc, xbmcgui
 
-from utils import connectDevice
+from utils import connectDeviceWithRetry
 
 addon = xbmcaddon.Addon("script.bluetooth-devices-connector")
 
@@ -27,7 +27,7 @@ def main():
 
 		report = report + getReport(d, "Failed")
 
-	connectDevice(devs, 4, onSuccess, onError)
+	connectDeviceWithRetry(devs, 4, onSuccess, onError)
 
 	xbmcgui.Dialog().ok("Devices connection report:", report)
 
