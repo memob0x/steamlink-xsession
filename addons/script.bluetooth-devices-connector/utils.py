@@ -2,6 +2,8 @@ from subprocess import PIPE, Popen
 
 from os.path import exists
 
+from os import remove
+
 def noop(arg):
 	return None
 
@@ -92,4 +94,4 @@ def readFile(path):
 
 def deleteFile(path):
 	if exists(path):
-		os.remove(path)
+		remove(path)
