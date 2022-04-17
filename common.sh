@@ -77,3 +77,14 @@ possibly_apply_bt_5_fix ()
                 fi
         done
 }
+
+set_default_audio_output_hdmi ()
+{
+	sink_index_active=$(pacmd list-sinks | grep "*" | tail -c 2)
+	sink_index_hdmi=$(pactl list short sinks | grep "hdmi" | awk '{print $1;}')
+
+	if [ "$sink_index_active" -ne "$sink_index_hdmi" ];
+	then
+		pacmd set-default-sink $sink_index_hdmi
+	fi
+}
