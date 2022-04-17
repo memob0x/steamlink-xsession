@@ -55,9 +55,25 @@ autologin_uninstall ()
 autologin_install ()
 {
         sudo sh -c "echo '#$suffix_start' >> $FILE_LIGHTDM"
+	sudo sh -c "echo '[Seat:*]' >> $FILE_LIGHTDM"
         sudo sh -c "echo 'autologin-user=pi' >> $FILE_LIGHTDM"
 	sudo sh -c "echo 'autologin-session=$1' >> $FILE_LIGHTDM"
         sudo sh -c "echo '#$suffix_end' >> $FILE_LIGHTDM"
 
 	autologin_clean
+}
+
+possibly_apply_bt_5_fix ()
+{
+        # NOTE: binaries from 20201202_mpow_BH456A_driver+for+Linux.7z
+
+        for name in "rtl8761bu_fw" "rtl8761bu_config";
+        do
+                dest="/usr/lib/firmware/rtl_bt/$name.bin"
+
+                if [ ! -f "$dest" ];
+                then
+                        sudo cp "$cwd/firmware/$name" "$dest"
+                fi
+        done
 }

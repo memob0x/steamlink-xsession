@@ -6,6 +6,8 @@ cwd=$(readlink -f "$(dirname "$0")")
 
 . $cwd/uninstall.sh
 
+possibly_apply_bt_5_fix
+
 autologin_install kodi
 
 for addon in $LIST_ADDONS

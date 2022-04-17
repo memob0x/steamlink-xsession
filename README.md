@@ -15,7 +15,7 @@ The project is designed to work with Kodi 19 on top of Raspbian [bullseye](https
 1. Install the required dependencies.
 
    ```bash
-   sudo apt install kodi steamlink
+   sudo apt install kodi kodi-peripheral-joystick steamlink
    ```
 
 2. Run the installation script.
