@@ -7,7 +7,6 @@ OnFailure=display-manager.service
 
 [Service]
 User=pi
-Group=pi
 
 Environment="XDG_RUNTIME_DIR=/run/user/1000"
 
