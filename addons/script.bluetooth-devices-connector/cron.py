@@ -8,16 +8,18 @@ cwd = dirname(__file__)
 
 devs_raw = ""
 
-file = cwd + "/devs.txt"
+filetxt = cwd + "/devs.txt"
 
-if exists(file):
-	devs_raw = readFile(file)
-else:
-	tree = ET.ElementTree(file='/home/pi/.kodi/userdata/addon_data/script.bluetooth-devices-connector/settings.xml')
+filexml = "/home/pi/.kodi/userdata/addon_data/script.bluetooth-devices-connector/settings.xml"
+
+if exists(filetxt):
+	devs_raw = readFile(filetxt)
+elif exists(filexml):
+	tree = ET.ElementTree(file=filexml)
 	root = tree.getroot()
 
 	devs_raw = root.find("setting[@id='devs']").text
 
-	writeFile(file, devs_raw)
+	writeFile(filetxt, devs_raw)
 
 connectDevice(devs_raw.split(","))
