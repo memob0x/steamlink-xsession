@@ -1,9 +1,9 @@
 [Unit]
-Description=Run Kodi bluetooth-devices-connector service every n seconds
+Description=Run Kodi bluetooth-devices-connector service every 4 seconds
 
 [Timer]
-OnBootSec=10
-OnUnitActiveSec=10
+OnBootSec=4
+OnUnitActiveSec=4
 AccuracySec=1ms
 Unit=bluetooth-devices-connector.service
 

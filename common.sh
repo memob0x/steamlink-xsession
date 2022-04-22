@@ -80,7 +80,7 @@ possibly_apply_bt_5_fix ()
 
 set_default_audio_output_hdmi ()
 {
-	sink_index_hdmi=$(pactl list short sinks | grep "hdmi" | awk '{print $1;}')
+	sink_index_hdmi=$(pactl list short sinks 2> /dev/null | grep "hdmi" | awk '{print $1;}')
 
 	if [ ! $sink_index_hdmi ];
 	then
