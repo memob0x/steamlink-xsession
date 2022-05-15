@@ -8,11 +8,12 @@ OnFailure=display-manager.service
 [Service]
 User=pi
 
-Environment="XDG_RUNTIME_DIR=/run/user/1000"
-
 ExecStartPre=sudo service lightdm stop
 
-ExecStart=sudo -u pi -E /usr/bin/steamlink
+# NOTE: trick to allow dynamic env var based on user id
+# (since Environment="XDG_RUNTIME_DIR=/run/user/$(id -u pi)" doesn't work)
+# then run 'sudo -u pi -E /usr/bin/steamlink'
+ExecStart=/bin/bash -c 'export XDG_RUNTIME_DIR=/run/user/$(id -u pi) && sudo -u pi -E /usr/bin/steamlink'
 
 ExecStopPost=sudo service lightdm start
 

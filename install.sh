@@ -8,8 +8,6 @@ cwd=$(readlink -f "$(dirname "$0")")
 
 possibly_apply_bt_5_fix
 
-set_default_audio_output_hdmi
-
 autologin_install kodi
 
 for addon in $LIST_ADDONS

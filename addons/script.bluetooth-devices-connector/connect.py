@@ -1,55 +1,48 @@
 from utils import isDeviceState, exeBtCmd, log
 
-def attemptInteraction(dev, cmd, state):
-	def interact():
-		exeBtCmd(cmd, dev)
-
-	attempts = 0
-
-	while not isDeviceState(state, dev):
-		if attempts == 3:
-			return False
-
-		interact()
-
-		attempts += 1
-
-	return True
-
 def connect(devs):
 	report = ""
 
-	hasIteratedOnce = False
-
 	for dev in devs:
-		log(__file__ + " trying to connect to " + dev)
+		log(__file__ + " trying to trust " + dev)
 
-		isConnected = attemptInteraction(dev, "connect", "Connected")
+		exeBtCmd("trust", dev)
 
-		if hasIteratedOnce:
-			report += "\n\n"
+		isTrusted = isDeviceState("Trusted", dev)
 
-		log(__file__ + " " + dev + " connection result: " + str(isConnected))
+		log(__file__ + " " + dev + " trust result: " + str(isTrusted))
 
-		report += dev + " Connected: " + str(isConnected)
+		report += "\n" + dev + " Trusted: " + str(isTrusted)
 
-		log(__file__ + " trying to pair " + dev)
+		# ---
 
-		isPaired = attemptInteraction(dev, "pair", "Paired")
+		isPaired = isDeviceState("Paired", dev)
 
-		log(__file__ + " " + dev + " pairing result: " + str(isPaired))
+		if not isPaired:
+			log(__file__ + " trying to pair " + dev)
 
-		report += "\n" + dev + " Paired: " + str(isPaired)
+			exeBtCmd("pair", dev)
 
-		if isConnected and isPaired:
-			log(__file__ + " trying to trust " + dev)
+			isPaired = isDeviceState("Paired", dev)
 
-			isTrusted = attemptInteraction(dev, "trust", "Trusted")
+			log(__file__ + " " + dev + " pairing result: " + str(isPaired))
 
-			log(__file__ + " " + dev + " trust result: " + str(isTrusted))
+			report += "\n" + dev + " Paired: " + str(isPaired)
 
-			report += "\n" + dev + " Trusted: " + str(isTrusted)
+		# ---
 
-		hasIteratedOnce = True
+                isConnected = isDeviceState("Connected", dev)
+
+                if not isConnected:
+                        log(__file__ + " trying to connect to " + dev)
+
+                        exeBtCmd("connect", dev)
+
+                        isConnected = isDeviceState("Connected", dev)
+
+                        log(__file__ + " " + dev + " connection result: " + str(isConnected))
+
+                        report += dev + " Connected: " + str(isConnected)
 
 	return report
+

@@ -1,6 +1,6 @@
 from subprocess import check_output
 
-BOOL_DEBUG = False
+BOOL_DEBUG = True
 
 def log(string):
 	if BOOL_DEBUG:
@@ -13,13 +13,14 @@ def exeCmd(cmd):
 		log(__file__ + " exeCmd produced output: " + output)
 
 		return output
+
 	except Exception as e:
 		log(__file__ + " exeCmd returned error: "+ str(e))
 
 		return ""
 
-def exeBtCmd(action, dev):
-	cmd = "sudo bluetoothctl " + action + " " + dev
+def exeBtCmd(arg0, arg1):
+	cmd = "bluetoothctl " + arg0 + " " + arg1
 
 	log(__file__ + " executing bt command \"" + cmd + "\"")
 

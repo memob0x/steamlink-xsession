@@ -3,6 +3,7 @@ Description=Execute script.bluetooth-devices-connector kodi addon
 
 [Service]
 Type=oneshot
+
 ExecStart=/usr/bin/python /home/pi/.kodi/addons/script.bluetooth-devices-connector/cron.py
 
 [Install]
