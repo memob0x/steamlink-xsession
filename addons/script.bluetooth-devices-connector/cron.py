@@ -6,7 +6,7 @@ from connect import connect
 import xml.etree.ElementTree as ET
 
 log("-------------------------------------------------------------")
-log("bluetooth-devices-connector START ---------------------------")
+log("bluetooth-devices-connector start")
 log("-------------------------------------------------------------")
 
 cwd = dirname(__file__)
@@ -24,5 +24,5 @@ if exists(filexml):
 connect(devs_raw.split(","))
 
 log("-------------------------------------------------------------")
-log("bluetooth-devices-connector END -----------------------------")
+log("bluetooth-devices-connector end")
 log("-------------------------------------------------------------")

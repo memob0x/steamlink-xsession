@@ -26,9 +26,7 @@ def exeBtCmd(arg0, arg1):
 
 	return exeCmd(cmd)
 
-def isDeviceState(state, dev):
-	result = state + ": yes" in exeBtCmd("info", dev)
-
-	log(__file__ + " " + dev + " " + state + " " + str(result))
+def isBtInfoState(info, state):
+	result = state + ": yes" in info
 
 	return result
