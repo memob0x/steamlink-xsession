@@ -1,44 +1,40 @@
 from utils import isDeviceState, exeBtCmd, log
 
+from time import sleep
+
 def connect(devs):
 	report = ""
 
 	for dev in devs:
 		log(__file__ + " trying to trust " + dev)
 
-		exeBtCmd("trust", dev)
-
-		isTrusted = isDeviceState("Trusted", dev)
+		isTrusted = "succeeded" in exeBtCmd("trust", dev)
 
 		log(__file__ + " " + dev + " trust result: " + str(isTrusted))
 
 		report += "\n" + dev + " Trusted: " + str(isTrusted)
 
-		# ---
+		sleep(2)
 
 		isPaired = isDeviceState("Paired", dev)
 
 		if not isPaired:
 			log(__file__ + " trying to pair " + dev)
 
-			exeBtCmd("pair", dev)
-
-			isPaired = isDeviceState("Paired", dev)
+			isPaired = "succeeded" in exeBtCmd("pair", dev)
 
 			log(__file__ + " " + dev + " pairing result: " + str(isPaired))
 
 			report += "\n" + dev + " Paired: " + str(isPaired)
 
-		# ---
+		sleep(2)
 
                 isConnected = isDeviceState("Connected", dev)
 
                 if not isConnected:
                         log(__file__ + " trying to connect to " + dev)
 
-                        exeBtCmd("connect", dev)
-
-                        isConnected = isDeviceState("Connected", dev)
+                        isConnected = "succeeded" in exeBtCmd("connect", dev)
 
                         log(__file__ + " " + dev + " connection result: " + str(isConnected))
 
