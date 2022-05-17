@@ -1,5 +1,13 @@
 from utils import isBtInfoState, exeBtCmd, log
 
+argsList = [
+	["trust", "Trusted"],
+
+	["pair", "Paired"],
+
+	["connect", "Connected"]
+]
+
 def connect(devs):
 	report = ""
 
@@ -10,48 +18,17 @@ def connect(devs):
 
 		info = exeBtCmd("info", dev)
 
-		isTrusted = isBtInfoState(info, "Trusted")
-		isPaired = isBtInfoState(info, "Paired")
-		isConnected = isBtInfoState(info, "Connected")
+		for args in argsList:
+			action, state = args
 
-		if not isTrusted:
-			log(__file__ + " trying to trust " + dev)
+			isState = isBtInfoState(info, state)
 
-			isTrusted = "succeeded" in exeBtCmd("trust", dev)
+			if isState:
+				report += "\n" + log(dev + " already " + state)
+			else:
+				isState = "succeeded" in exeBtCmd(action, dev)
 
-			log(__file__ + " " + dev + " trust result: " + str(isTrusted))
-
-			report += "\n" + dev + " Trusted: " + str(isTrusted)
-		else:
-			log(__file__ + " " + dev + " already trusted")
-
-			report += "\n" + dev + " already trusted"
-
-		if not isPaired:
-			log(__file__ + " trying to pair " + dev)
-
-			isPaired = "succeeded" in exeBtCmd("pair", dev)
-
-			log(__file__ + " " + dev + " pairing result: " + str(isPaired))
-
-			report += "\n" + dev + " Paired: " + str(isPaired)
-		else:
-			log(__file__ + " " + dev + " already paired")
-
-			report += "\n" + dev + " already paired"
-
-                if not isConnected:
-                        log(__file__ + " trying to connect to " + dev)
-
-                        isConnected = "succeeded" in exeBtCmd("connect", dev)
-
-                        log(__file__ + " " + dev + " connection result: " + str(isConnected))
-
-                        report += dev + " Connected: " + str(isConnected)
-		else:
-			log(__file__ + " " + dev + " already connected")
-
-			report += "\n" + dev + " already connected"
+				report += "\n" + log(dev + " " + state + ": " + str(isState))
 
 		log("-------------------------------------------------------------")
 		log("connection " + dev + " end")
