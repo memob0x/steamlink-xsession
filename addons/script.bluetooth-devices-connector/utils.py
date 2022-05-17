@@ -8,6 +8,9 @@ def log(string):
 
 	return string
 
+def logSeparator():
+	log("--------------------------------------------------------")
+
 def exeCmd(cmd):
 	try:
 		output = check_output(cmd, shell=True)

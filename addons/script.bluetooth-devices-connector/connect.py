@@ -1,4 +1,4 @@
-from utils import isBtInfoState, exeBtCmd, log
+from utils import isBtInfoState, exeBtCmd, log, logSeparator
 
 argsList = [
 	["trust", "Trusted"],
@@ -12,9 +12,9 @@ def connect(devs):
 	report = ""
 
 	for dev in devs:
-                log("-------------------------------------------------------------")
-		log("connection " + dev + " start")
-		log("-------------------------------------------------------------")
+		logSeparator()
+
+		log(dev + " connection start")
 
 		info = exeBtCmd("info", dev)
 
@@ -30,9 +30,6 @@ def connect(devs):
 
 				report += "\n" + log(dev + " " + state + ": " + str(isState))
 
-		log("-------------------------------------------------------------")
-		log("connection " + dev + " end")
-		log("-------------------------------------------------------------")
+		log(dev + " connection end")
 
 	return report
-
