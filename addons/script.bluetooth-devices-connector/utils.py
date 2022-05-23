@@ -2,6 +2,10 @@ import os
 
 from subprocess import check_output
 
+# NOTE: in order let the log notices to be printed out
+# $ export BLUETOOTH_DEVICES_CONNECTOR_DEBUG=1
+# $ sudo -E systemctl import-environment BLUETOOTH_DEVICES_CONNECTOR_DEBUG
+
 def log(string):
 	if os.environ.get("BLUETOOTH_DEVICES_CONNECTOR_DEBUG") == "1":
 		print(string)
