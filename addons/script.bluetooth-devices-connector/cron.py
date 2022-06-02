@@ -1,11 +1,11 @@
 from os.path import dirname, exists
-
 from time import sleep
 
-from utils import exeCmd, log, logSeparator
+from utils import exeCmd, exeBtCmd, log, logSeparator
 from connect import connect
 
 import xml.etree.ElementTree as ET
+from multiprocessing import Process
 
 logSeparator()
 
@@ -22,25 +22,41 @@ log(__file__ + " not running, starting")
 
 filexml = "/home/pi/.kodi/userdata/addon_data/script.bluetooth-devices-connector/settings.xml"
 
-def poll():
-	log(__file__ + " iteration start")
+def startScanLoop():
+	while True:
+		exeBtCmd("scan", "on")
 
-	cwd = dirname(__file__)
+		sleep(2)
 
-	devs_raw = ""
+		exeBtCmd("scan", "off")
 
-	if exists(filexml):
-		tree = ET.ElementTree(file=filexml)
-		root = tree.getroot()
+		sleep(2)
 
-		devs_raw = root.find("setting[@id='devs']").text
+def startConnectionLoop():
+	while True:
+		log(__file__ + " iteration start")
 
-	connect(devs_raw.split(","))
+		cwd = dirname(__file__)
 
-	log(__file__ + " iteration end")
+		devs_raw = ""
 
-	sleep(2)
+		if exists(filexml):
+			tree = ET.ElementTree(file=filexml)
+			root = tree.getroot()
 
-	poll()
+			devs_raw = root.find("setting[@id='devs']").text
 
-poll()
+		connect(devs_raw.split(","))
+
+		log(__file__ + " iteration end")
+
+		sleep(2)
+
+p1 = Process(target=startScanLoop)
+p1.start()
+
+p2 = Process(target=startConnectionLoop)
+p2.start()
+
+p1.join()
+p2.join()
