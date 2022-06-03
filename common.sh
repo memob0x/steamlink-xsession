@@ -8,6 +8,7 @@ DIR_XSESSIONS=/usr/share/xsessions
 FILE_LIGHTDM=/etc/lightdm/lightdm.conf
 DIR_BIN=/home/pi/bin
 DIR_CONF=/home/pi/.config
+LIST_XSESSIONS="steamlink.desktop"
 
 get_ls ()
 {

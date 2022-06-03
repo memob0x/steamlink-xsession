@@ -16,6 +16,11 @@ do
         rm -r $DIR_CONF/$conf
 done
 
+for session in $LIST_XSESSIONS
+do
+        sudo rm $DIR_XSESSIONS/$session
+done
+
 for addon in $LIST_ADDONS
 do
 	sudo rm -rf $DIR_KODI_ADDONS/$addon

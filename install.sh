@@ -8,7 +8,7 @@ cwd=$(readlink -f "$(dirname "$0")")
 
 possibly_apply_bt_5_fix
 
-autologin_install kodi
+autologin_install steamlink # kodi | steamlink
 
 for addon in $LIST_ADDONS
 do
