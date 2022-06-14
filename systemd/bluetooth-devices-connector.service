@@ -1,8 +1,7 @@
-# NOTE: in order to inspect service output
-# $ journalctl -e -b -u bluetooth-devices-connector.service
-
 [Unit]
-Description=Execute script.bluetooth-devices-connector kodi addon
+Description=Bluetooth devices auto-connector
+
+Requires=bluetooth.service
 
 [Service]
 Type=oneshot

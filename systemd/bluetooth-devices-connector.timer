@@ -1,10 +1,15 @@
 [Unit]
-Description=Periodically checks that the bluetooth-devices-connector service is running
+Description=Bluetooth devices scanner service cron
 
 [Timer]
-OnBootSec=60
-OnUnitActiveSec=60
-AccuracySec=1ms
+# after boot process finished start time
+OnBootSec=1s
+
+# service activation frequenciy time
+OnUnitActiveSec=2s
+
+AccuracySec=1us
+
 Unit=bluetooth-devices-connector.service
 
 [Install]

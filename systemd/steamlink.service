@@ -1,21 +1,33 @@
 [Unit]
-Description=Steamlink Service
+Description=Steamlink service
 
+# steamlink is incompatible with X server under bullseye,
+# thus lightdm is marked as incompatible for this service,
+# this normally kills lightdm automatically
 Conflicts=display-manager.service
 
+# restart lightdm if steamlink fails to launch
 OnFailure=display-manager.service
 
 [Service]
+Type=simple
+
 User=pi
 
+# ensures lightdm service is down
+# double check, since it's normally killed by "Conflicts"
 ExecStartPre=sudo service lightdm stop
 
-# NOTE: trick to allow dynamic env var based on user id
-# (since Environment="XDG_RUNTIME_DIR=/run/user/$(id -u pi)" doesn't work)
-# then run 'sudo -u pi -E /usr/bin/steamlink'
-ExecStart=/bin/bash -c 'export XDG_RUNTIME_DIR=/run/user/$(id -u pi) && sudo -u pi -E /usr/bin/steamlink'
+# registers steamlink as autologin session;
+# exports a dynamic variable as environment variable
+# (inline, since "Environment" property doesn't support dynamic values);
+# launches steamlink binary
+ExecStart=/bin/bash -c '/bin/sh /home/pi/bin/autologin.sh install steamlink && export XDG_RUNTIME_DIR=/run/user/$(id -u pi) && sudo -u pi -E /usr/bin/steamlink'
 
-ExecStopPost=sudo service lightdm start
+# registers kodi as autologin session;
+# sleeps a bit in order to give to lightdm the time to read the updated autologin configuration (TODO: check if it's still needed);
+# starts lightdm service
+ExecStopPost=/bin/bash -c '/bin/sh /home/pi/bin/autologin.sh install kodi && sleep 1 && sudo service lightdm start'
 
 [Install]
 WantedBy=default.target
