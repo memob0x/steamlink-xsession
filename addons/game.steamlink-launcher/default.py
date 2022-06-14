@@ -1,4 +1,5 @@
-import xbmc, subprocess
+import xbmc
+import subprocess
 
 xbmc.executebuiltin('ActivateWindow(busydialognocancel)')
 

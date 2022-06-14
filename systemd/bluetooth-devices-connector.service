@@ -6,7 +6,7 @@ Requires=bluetooth.service
 [Service]
 Type=oneshot
 
-ExecStart=/usr/bin/python /home/pi/.kodi/addons/script.bluetooth-devices-connector/cron.py
+ExecStart=/usr/bin/python /home/pi/.kodi/addons/script.bluetooth-devices-connector/daemon.py
 
 [Install]
 WantedBy=multi-user.target

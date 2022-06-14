@@ -1,19 +1,12 @@
-import xbmcaddon, xbmc, xbmcgui
+import xbmcgui
 
-from connect import connect
-
-addon = xbmcaddon.Addon("script.bluetooth-devices-connector")
-
-devs = addon.getSettingString("devs").split(",")
 
 def main():
-	ok = xbmcgui.Dialog().ok("Connecting to bluetooth devices", "Just make sure they're ready for pairing. \n" + str(devs))
+    xbmcgui.Dialog().ok(
+        "Use this addon settings to save your devices mac addresses.",
 
-	if not ok:
-		return;
+        "They will be automatically connected as soon as they get reachable."
+    )
 
-	report = connect(devs)
-
-	xbmcgui.Dialog().ok("Devices connection report:", report)
 
 main()
