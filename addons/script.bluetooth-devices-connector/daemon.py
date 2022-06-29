@@ -32,6 +32,10 @@ def execute_shell_command(command):
         return ""
 
 
+def execute_bluetoothctl_command(command):
+    return execute_shell_command("sudo -u pi -E bluetoothctl " + command)
+
+
 def get_settings_bluetooth_devices_mac_list_from_xml(file_xml_path):
     devices_string = ""
 
@@ -76,6 +80,7 @@ def is_daemon_already_running():
     # TODO: should probably improve this with a process exact match (maybe through absolute paths?)
     return len(get_daemon_ps_list()) > 2
 
+
 def launch_daemon_copy_xml_loop():
     while True:
         copyfile(
@@ -86,43 +91,46 @@ def launch_daemon_copy_xml_loop():
 
         sleep(12)
 
+
 def launch_daemon_scan_loop():
     while True:
-        execute_shell_command("sudo -u pi -E bluetoothctl scan on")
+        execute_bluetoothctl_command("scan on")
 
         sleep(5)
 
-        execute_shell_command("sudo -u pi -E bluetoothctl scan off")
+        execute_bluetoothctl_command("scan off")
 
         sleep(1)
 
 
+def aaa():
+    devices_mac = get_settings_bluetooth_devices_mac_list_from_xml(
+        "/tmp/bluetooth-devices-connector-addon-settings.xml"
+    )
+
+    return sample(devices_mac, len(devices_mac))
+
+
 def launch_daemon_connection_loop():
     while True:
-        devices_mac = get_settings_bluetooth_devices_mac_list_from_xml(
-            "/tmp/bluetooth-devices-connector-addon-settings.xml"
-        )
-
-        devices_mac_in_random_order = sample(devices_mac, len(devices_mac))
-
-        for device_mac in devices_mac_in_random_order:
+        for device_mac in aaa():
             if len(device_mac) <= 0:
                 continue
 
-            device_informations = execute_shell_command(
-                "sudo -u pi -E bluetoothctl info" + device_mac
+            device_bluetoothctl_informations = execute_bluetoothctl_command(
+                "info " + device_mac
             )
 
             for bluetooth_command_arguments in [
                 ["trust", "Trusted"],
 
+                ["connect", "Connected"],
+
                 ["pair", "Paired"],
-
-                ["connect", "Connected"]
             ]:
-                bluetooth_command_action, bluetooth_command_expected_state = bluetooth_command_arguments
+                bluetoothctl_command_action, bluetoothctl_command_expected_state = bluetooth_command_arguments
 
-                if bluetooth_command_expected_state + ": yes" in device_informations:
+                if bluetoothctl_command_expected_state + ": yes" in device_bluetoothctl_informations:
                     print_debug_log(
                         "Device (" +
 
@@ -130,14 +138,26 @@ def launch_daemon_connection_loop():
 
                         ") was already in state: " +
 
-                        bluetooth_command_expected_state
+                        bluetoothctl_command_expected_state
                     )
                 else:
-                    execute_shell_command(
-                        "sudo -u pi -E bluetoothctl " + bluetooth_command_action + " " + device_mac
+                    execute_bluetoothctl_command(
+                        bluetoothctl_command_action + " " + device_mac
                     )
 
         sleep(1)
+
+
+def launch_daemon_ejection_loop():
+    while True:
+        for device_mac in aaa():
+            if len(device_mac) <= 0:
+                continue
+
+            if not "Connected: yes" in execute_bluetoothctl_command("info " + device_mac):
+                execute_bluetoothctl_command("remove " + device_mac)
+
+        sleep(6)
 
 
 if is_daemon_already_running():
@@ -161,6 +181,10 @@ p1.start()
 p2 = Process(target=launch_daemon_connection_loop)
 p2.start()
 
+p3 = Process(target=launch_daemon_ejection_loop)
+p3.start()
+
 p0.join()
 p1.join()
 p2.join()
+p3.join()
