@@ -2,7 +2,7 @@
 
 directory_path_kodi_addons=/home/pi/.kodi/addons
 directory_path_systemd_system=/etc/systemd/system
-directory_path_systemd_user=/etc/systemd/user
+directory_path_systemd_user=/home/pi/.config/systemd/user
 directory_path_xsessions=/usr/share/xsessions
 directory_path_scripts=/home/pi/bin
 
