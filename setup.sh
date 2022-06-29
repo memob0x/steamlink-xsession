@@ -1,7 +1,8 @@
 #!/bin/sh
 
 directory_path_kodi_addons=/home/pi/.kodi/addons
-directory_path_systemd=/etc/systemd/system
+directory_path_service_system=/etc/service/system
+directory_path_service_user=/etc/service/user
 directory_path_xsessions=/usr/share/xsessions
 directory_path_scripts=/home/pi/bin
 
@@ -10,7 +11,8 @@ directory_path_this_script=$(readlink -f "$(dirname "$0")")
 script_argument_primary="$1"
 
 list_addons=$(ls -1 $directory_path_this_script/addons)
-list_systemd=$(ls -1 $directory_path_this_script/systemd)
+list_service_system=$(ls -1 $directory_path_this_script/service/system)
+list_service_user=$(ls -1 $directory_path_this_script/service/user)
 list_scripts=$(ls -1 $directory_path_this_script/bin)
 list_xsessions=$(ls -1 $directory_path_this_script/xsessions)
 
@@ -22,16 +24,28 @@ uninstall_xsessions ()
   done
 }
 
-uninstall_services ()
+uninstall_services_system ()
 {
-  for service in $list_systemd
+  for service in $list_service_system
   do
-    sudo rm $directory_path_systemd/$service
+    sudo rm $directory_path_service_system/$service
 
     sudo systemctl stop $service
   done
 
   sudo systemctl daemon-reload
+}
+
+uninstall_services_system ()
+{
+  for service in $list_service_user
+  do
+    sudo rm $directory_path_service_user/$service
+
+    systemctl --user stop $service
+  done
+
+  systemctl --user daemon-reload
 }
 
 uninstall_scripts ()
@@ -42,7 +56,7 @@ uninstall_scripts ()
   done
 }
 
-uninstall_kodi_addons ()
+uninstall_addons ()
 {
   for addon in $list_addons
   do
@@ -56,11 +70,13 @@ uninstall_all ()
 
   uninstall_xsessions
 
-  uninstall_services
+  uninstall_services_system
+
+  uninstall_services_user
 
   uninstall_scripts
 
-  uninstall_kodi_addons
+  uninstall_addons
 }
 
 install_bt_drivers ()
@@ -78,19 +94,34 @@ install_bt_drivers ()
   done
 }
 
-install_services ()
+install_services_system ()
 {
   sudo -E systemctl import-environment BLUETOOTH_DEVICES_CONNECTOR_DEBUG
 
-  for service in $list_systemd
+  for service in $list_service_system
   do
-    sudo cp $directory_path_this_script/systemd/$service $directory_path_systemd
-    sudo chmod 664 $directory_path_systemd/$service
+    sudo cp $directory_path_this_script/service/system/$service $directory_path_service_system
+    sudo chmod 664 $directory_path_service_system/$service
 
     sudo systemctl start $service
   done
 
   sudo systemctl daemon-reload
+}
+
+install_services_user ()
+{
+  sudo -E systemctl import-environment BLUETOOTH_DEVICES_CONNECTOR_DEBUG
+
+  for service in $list_service_user
+  do
+    sudo cp $directory_path_this_script/service/user/$service $directory_path_service_user
+    sudo chmod 664 $directory_path_service_user/$service
+
+    systemctl --user start $service
+  done
+
+  systemctl --user daemon-reload
 }
 
 install_scripts ()
@@ -106,7 +137,7 @@ install_scripts ()
   done
 }
 
-install_kodi_addons ()
+install_addons ()
 {
   for addon in $list_addons
   do
@@ -128,11 +159,13 @@ install_all ()
 
   /bin/sh $directory_path_scripts/autologin.sh install steamlink
 
-  install_kodi_addons
+  install_addons
 
   install_xsessions
 
-  install_services
+  install_services_system
+
+  install_services_user
 
   install_bt_drivers
 }
@@ -147,16 +180,4 @@ then
   uninstall_all
 
   install_all
-fi
-
-if [ "$script_argument_primary" = "uninstall_kodi_addons" ]
-then
-  uninstall_kodi_addons
-fi
-
-if [ "$script_argument_primary" = "install_kodi_addons" ]
-then
-  uninstall_kodi_addons
-
-  install_kodi_addons
-fi
+fi 
