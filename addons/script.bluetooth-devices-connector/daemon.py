@@ -145,19 +145,17 @@ def launch_daemon_connection_loop():
                         bluetoothctl_command_action + " " + device_mac
                     )
 
+                    if(bluetoothctl_command_action != "connect"):
+                        continue
+
+                    if bluetoothctl_command_expected_state + ": no" in execute_bluetoothctl_command(
+                        "info " + device_mac
+                    ):
+                        execute_bluetoothctl_command(
+                            "remove " + device_mac
+                        )
+
         sleep(1)
-
-
-def launch_daemon_ejection_loop():
-    while True:
-        for device_mac in aaa():
-            if len(device_mac) <= 0:
-                continue
-
-            if not "Connected: yes" in execute_bluetoothctl_command("info " + device_mac):
-                execute_bluetoothctl_command("remove " + device_mac)
-
-        sleep(6)
 
 
 if is_daemon_already_running():
@@ -181,10 +179,6 @@ p1.start()
 p2 = Process(target=launch_daemon_connection_loop)
 p2.start()
 
-p3 = Process(target=launch_daemon_ejection_loop)
-p3.start()
-
 p0.join()
 p1.join()
 p2.join()
-p3.join()
