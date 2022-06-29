@@ -38,11 +38,21 @@ uninstall_services_system ()
 
 uninstall_services_user ()
 {
+  if [ ! -d "/home/pi/.config/systemd" ];
+  then
+    mkdir /home/pi/.config/systemd
+  fi
+
+  if [ ! -d "$list_systemd_user" ];
+  then
+    mkdir $list_systemd_user
+  fi
+
   for service in $list_systemd_user
   do
     sudo rm $directory_path_systemd_user/$service
 
-    systemctl --user stop $service
+    systemctl --user stop pi.$service
   done
 
   systemctl --user daemon-reload
