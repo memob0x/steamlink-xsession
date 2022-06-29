@@ -89,11 +89,24 @@ def launch_daemon_copy_xml_loop():
         sleep(12)
 
 
+def scan_bt_devices():
+    try:
+        bluetooth.discover_devices(
+            duration=12,
+            lookup_names=True,
+            flush_cache=True,
+            lookup_class=False
+        )
+    except Exception as e:
+        print_debug_log(
+            "Exception in launch_daemon_scan_loop function: " +
+            str(e)
+        )
+
+
 def launch_daemon_scan_loop():
     while True:
-        bluetooth.discover_devices(lookup_names=True)
-
-        sleep(4)
+        scan_bt_devices()
 
 
 def get_devices_list_in_random_order():
@@ -104,24 +117,36 @@ def get_devices_list_in_random_order():
     return sample(devices_mac, len(devices_mac))
 
 
+def connect_to_bt_device(device_mac):
+    sock = bluetooth.BluetoothSocket(bluetooth.RFCOMM)
+
+    try:
+        print_debug_log("Trying to connect to " + device_mac)
+
+        sock.connect((device_mac, 1))
+
+        print_debug_log("Done with " + device_mac + " connection")
+
+        # 0x1X for straight forward and 0x11 for very slow to 0x1F for fastest
+        sock.send("\x1A")
+    except Exception as e:
+        print_debug_log(
+            "Exception in launch_daemon_connection_loop function: " +
+            str(e)
+        )
+
+    sock.recv(1024)
+
+
 def launch_daemon_connection_loop():
     while True:
         for device_mac in get_devices_list_in_random_order():
             if len(device_mac) <= 0:
                 continue
 
-            try:
-                sock = bluetooth.BluetoothSocket(bluetooth.RFCOMM)
+            print_debug_log("Loop attempting to connect " + device_mac)
 
-                sock.connect((device_mac, 1))
-
-                # 0x1X for straight forward and 0x11 for very slow to 0x1F for fastest
-                sock.send("\x1A")
-            except Exception as e:
-                print_debug_log(
-                    "Exception in launch_daemon_connection_loop function: " +
-                    str(e)
-                )
+            connect_to_bt_device(device_mac)
 
 
 if is_daemon_already_running():
@@ -130,11 +155,6 @@ if is_daemon_already_running():
     exit()
 
 print_debug_log("Daemon is not running, launch")
-
-# TODO: should execute the following commands too
-# sudo -u pi -E bluetoothctl power on
-# sudo -u pi -E bluetoothctl pairable on
-# sudo -u pi -E bluetoothctl discoverable on
 
 p0 = Process(target=launch_daemon_copy_xml_loop)
 p0.start()
