@@ -96,11 +96,11 @@ def launch_daemon_scan_loop():
     while True:
         execute_bluetoothctl_command("scan on")
 
-        sleep(5)
+        sleep(12)
 
         execute_bluetoothctl_command("scan off")
 
-        sleep(1)
+        sleep(4)
 
 
 def aaa():
@@ -145,12 +145,18 @@ def launch_daemon_connection_loop():
                         bluetoothctl_command_action + " " + device_mac
                     )
 
+                    sleep(1)
+
                     if(bluetoothctl_command_action != "connect"):
                         continue
 
                     if bluetoothctl_command_expected_state + ": no" in execute_bluetoothctl_command(
                         "info " + device_mac
                     ):
+                        execute_bluetoothctl_command(
+                            "disconnect " + device_mac
+                        )
+
                         execute_bluetoothctl_command(
                             "remove " + device_mac
                         )
