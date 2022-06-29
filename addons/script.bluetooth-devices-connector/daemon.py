@@ -1,3 +1,4 @@
+import bluetooth
 from random import sample
 from os import path, environ
 from time import sleep
@@ -26,14 +27,10 @@ def execute_shell_command(command):
 
     except Exception as e:
         print_debug_log(
-            "Function execute_shell_command returned error: " + str(e)
+            "Exception in execute_shell_command function: " + str(e)
         )
 
         return ""
-
-
-def execute_bluetoothctl_command(command):
-    return execute_shell_command("sudo -u pi -E bluetoothctl " + command)
 
 
 def get_settings_bluetooth_devices_mac_list_from_xml(file_xml_path):
@@ -94,16 +91,12 @@ def launch_daemon_copy_xml_loop():
 
 def launch_daemon_scan_loop():
     while True:
-        execute_bluetoothctl_command("scan on")
-
-        sleep(12)
-
-        execute_bluetoothctl_command("scan off")
+        bluetooth.discover_devices(lookup_names=True)
 
         sleep(4)
 
 
-def aaa():
+def get_devices_list_in_random_order():
     devices_mac = get_settings_bluetooth_devices_mac_list_from_xml(
         "/tmp/bluetooth-devices-connector-addon-settings.xml"
     )
@@ -113,55 +106,22 @@ def aaa():
 
 def launch_daemon_connection_loop():
     while True:
-        for device_mac in aaa():
+        for device_mac in get_devices_list_in_random_order():
             if len(device_mac) <= 0:
                 continue
 
-            device_bluetoothctl_informations = execute_bluetoothctl_command(
-                "info " + device_mac
-            )
+            try:
+                sock = bluetooth.BluetoothSocket(bluetooth.RFCOMM)
 
-            for bluetooth_command_arguments in [
-                ["trust", "Trusted"],
+                sock.connect((device_mac, 1))
 
-                ["connect", "Connected"],
-
-                ["pair", "Paired"],
-            ]:
-                bluetoothctl_command_action, bluetoothctl_command_expected_state = bluetooth_command_arguments
-
-                if bluetoothctl_command_expected_state + ": yes" in device_bluetoothctl_informations:
-                    print_debug_log(
-                        "Device (" +
-
-                        device_mac +
-
-                        ") was already in state: " +
-
-                        bluetoothctl_command_expected_state
-                    )
-                else:
-                    execute_bluetoothctl_command(
-                        bluetoothctl_command_action + " " + device_mac
-                    )
-
-                    sleep(1)
-
-                    if(bluetoothctl_command_action != "connect"):
-                        continue
-
-                    if bluetoothctl_command_expected_state + ": no" in execute_bluetoothctl_command(
-                        "info " + device_mac
-                    ):
-                        execute_bluetoothctl_command(
-                            "disconnect " + device_mac
-                        )
-
-                        execute_bluetoothctl_command(
-                            "remove " + device_mac
-                        )
-
-        sleep(1)
+                # 0x1X for straight forward and 0x11 for very slow to 0x1F for fastest
+                sock.send("\x1A")
+            except Exception as e:
+                print_debug_log(
+                    "Exception in launch_daemon_connection_loop function: " +
+                    str(e)
+                )
 
 
 if is_daemon_already_running():
