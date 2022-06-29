@@ -36,7 +36,7 @@ uninstall_services_system ()
   sudo systemctl daemon-reload
 }
 
-uninstall_services_system ()
+uninstall_services_user ()
 {
   for service in $list_systemd_user
   do
