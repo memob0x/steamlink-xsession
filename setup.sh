@@ -28,18 +28,7 @@ uninstall ()
     sudo rm $directory_path_systemd/$service
 
     sudo systemctl stop $service
-
-    is_timer=$(echo $service | grep -z ".timer")
-
-    if [ "$is_timer" ];
-    then
-      echo "found a timer to be uninstalled: "$service", disabling it."
-
-      sudo systemctl disable $service
-    fi
   done
-
-  sudo systemctl daemon-reload
 
   for bin in $list_scripts
   do
@@ -84,18 +73,7 @@ install ()
     sudo chmod 664 $directory_path_systemd/$service
 
     sudo systemctl start $service
-
-    is_timer=$(echo $service | grep -z ".timer")
-
-    if [ "$is_timer" ];
-    then
-      echo "found a timer to be installed: "$service", enabling it."
-
-      sudo systemctl enable $service
-    fi
   done
-
-  sudo systemctl daemon-reload
 
   # possibly install missing bluetooth 5 firmware
   # NOTE: binaries from 20201202_mpow_BH456A_driver+for+Linux.7z

@@ -70,12 +70,7 @@ def get_daemon_ps_list():
 
 
 def is_daemon_already_running():
-    # NOTE:
-    # 1: the process itself that might be already running
-    # 2: the process + the pgrep command
-    # 3: not valid, 1 process and 1 pgrep
-    # TODO: should probably improve this with a process exact match (maybe through absolute paths?)
-    return len(get_daemon_ps_list()) > 2
+    return len(get_daemon_ps_list()) > 0
 
 
 def launch_daemon_copy_xml_loop():
