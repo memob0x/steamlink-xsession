@@ -18,16 +18,6 @@ uninstall ()
 {
   /bin/sh $directory_path_scripts/autologin.sh uninstall
 
-  for bin in $list_scripts
-  do
-    rm $directory_path_scripts/$bin
-  done
-
-  for addon in $list_addons
-  do
-    sudo rm -rf $directory_path_kodi_addons/$addon
-  done
-
   for session in $list_xsessions
   do
     sudo rm $directory_path_xsessions/$session
@@ -39,15 +29,27 @@ uninstall ()
 
     sudo systemctl stop $service
 
-    is_timer=$(echo $list_systemd | grep -z ".timer")
+    is_timer=$(echo $service | grep -z ".timer")
 
     if [ "$is_timer" ];
     then
+      echo "found a timer to be uninstalled: "$service", disabling it."
+
       sudo systemctl disable $service
     fi
   done
 
   sudo systemctl daemon-reload
+
+  for bin in $list_scripts
+  do
+    rm $directory_path_scripts/$bin
+  done
+
+  for addon in $list_addons
+  do
+    sudo rm -rf $directory_path_kodi_addons/$addon
+  done
 }
 
 install ()
@@ -83,10 +85,12 @@ install ()
 
     sudo systemctl start $service
 
-    is_timer=$(echo $list_systemd | grep -z ".timer")
+    is_timer=$(echo $service | grep -z ".timer")
 
     if [ "$is_timer" ];
     then
+      echo "found a timer to be installed: "$service", enabling it."
+
       sudo systemctl enable $service
     fi
   done

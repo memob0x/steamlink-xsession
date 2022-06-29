@@ -4,6 +4,7 @@ from time import sleep
 from subprocess import check_output
 from multiprocessing import Process
 from xml.etree import ElementTree
+from shutil import copyfile
 
 
 def print_debug_log(string):
@@ -34,11 +35,14 @@ def execute_shell_command(command):
 def get_settings_bluetooth_devices_mac_list_from_xml(file_xml_path):
     devices_string = ""
 
-    if path.exists(file_xml_path):
-        tree = ElementTree.ElementTree(file=file_xml_path)
-        root = tree.getroot()
+    try:
+        if path.exists(file_xml_path):
+            tree = ElementTree.ElementTree(file=file_xml_path)
+            root = tree.getroot()
 
-        devices_string = root.find("setting[@id='devs']").text
+            devices_string = root.find("setting[@id='devs']").text
+    except Exception as e:
+        print_debug_log("error reading xml: " + str(e))
 
     return devices_string.split(",")
 
@@ -72,6 +76,15 @@ def is_daemon_already_running():
     # TODO: should probably improve this with a process exact match (maybe through absolute paths?)
     return len(get_daemon_ps_list()) > 2
 
+def launch_daemon_copy_xml_loop():
+    while True:
+        copyfile(
+            "/home/pi/.kodi/userdata/addon_data/script.bluetooth-devices-connector/settings.xml",
+
+            "/tmp/bluetooth-devices-connector-addon-settings.xml"
+        )
+
+        sleep(12)
 
 def launch_daemon_scan_loop():
     while True:
@@ -87,7 +100,7 @@ def launch_daemon_scan_loop():
 def launch_daemon_connection_loop():
     while True:
         devices_mac = get_settings_bluetooth_devices_mac_list_from_xml(
-            "/home/pi/.kodi/userdata/addon_data/script.bluetooth-devices-connector/settings.xml"
+            "/tmp/bluetooth-devices-connector-addon-settings.xml"
         )
 
         devices_mac_in_random_order = sample(devices_mac, len(devices_mac))
@@ -139,11 +152,15 @@ print_debug_log("Daemon is not running, launch")
 # sudo -u pi -E bluetoothctl pairable on
 # sudo -u pi -E bluetoothctl discoverable on
 
+p0 = Process(target=launch_daemon_copy_xml_loop)
+p0.start()
+
 p1 = Process(target=launch_daemon_scan_loop)
 p1.start()
 
 p2 = Process(target=launch_daemon_connection_loop)
 p2.start()
 
+p0.join()
 p1.join()
 p2.join()

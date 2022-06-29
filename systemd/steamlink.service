@@ -14,20 +14,11 @@ Type=simple
 
 User=pi
 
-# ensures lightdm service is down
-# double check, since it's normally killed by "Conflicts"
-ExecStartPre=sudo service lightdm stop
+ExecStartPre=/bin/sh /home/pi/bin/launch_steamlink_pre.sh
 
-# registers steamlink as autologin session;
-# exports a dynamic variable as environment variable
-# (inline, since "Environment" property doesn't support dynamic values);
-# launches steamlink binary
-ExecStart=/bin/bash -c '/bin/sh /home/pi/bin/autologin.sh install steamlink && export XDG_RUNTIME_DIR=/run/user/$(id -u pi) && sudo -u pi -E /usr/bin/steamlink'
+ExecStart=/bin/sh /home/pi/bin/launch_steamlink.sh
 
-# registers kodi as autologin session;
-# sleeps a bit in order to give to lightdm the time to read the updated autologin configuration (TODO: check if it's still needed);
-# starts lightdm service
-ExecStopPost=/bin/bash -c '/bin/sh /home/pi/bin/autologin.sh install kodi && sleep 1 && sudo service lightdm start'
+ExecStopPost=/bin/sh /home/pi/bin/launch_steamlink_post.sh
 
 [Install]
 WantedBy=default.target
