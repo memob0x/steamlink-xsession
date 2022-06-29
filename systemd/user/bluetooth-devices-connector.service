@@ -1,8 +1,6 @@
 [Unit]
 Description=Bluetooth devices auto-connector
 
-Requires=bluetooth.service
-
 [Service]
 Type=oneshot
 

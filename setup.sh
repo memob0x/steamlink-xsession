@@ -29,8 +29,6 @@ uninstall_services_system ()
   for service in $list_systemd_system
   do
     sudo rm $directory_path_systemd_system/$service
-
-    sudo systemctl stop $service
   done
 
   sudo systemctl daemon-reload
@@ -51,8 +49,6 @@ uninstall_services_user ()
   for service in $list_systemd_user
   do
     sudo rm $directory_path_systemd_user/$service
-
-    systemctl --user stop pi.$service
   done
 
   systemctl --user daemon-reload
@@ -111,9 +107,8 @@ install_services_system ()
   for service in $list_systemd_system
   do
     sudo cp $directory_path_this_script/systemd/system/$service $directory_path_systemd_system
-    sudo chmod 664 $directory_path_systemd_system/$service
 
-    sudo systemctl start $service
+    sudo chmod 664 $directory_path_systemd_system/$service
   done
 
   sudo systemctl daemon-reload
@@ -126,9 +121,8 @@ install_services_user ()
   for service in $list_systemd_user
   do
     sudo cp $directory_path_this_script/systemd/user/$service $directory_path_systemd_user
-    sudo chmod 664 $directory_path_systemd_user/$service
 
-    systemctl --user start $service
+    sudo chmod 664 $directory_path_systemd_user/$service
   done
 
   systemctl --user daemon-reload
