@@ -80,16 +80,22 @@ def is_daemon_already_running():
 
 def launch_daemon_copy_xml_loop():
     while True:
+        print_debug_log("Copying devices list to temporary directory...")
+
         copyfile(
             "/home/pi/.kodi/userdata/addon_data/script.bluetooth-devices-connector/settings.xml",
 
             "/tmp/bluetooth-devices-connector-addon-settings.xml"
         )
 
+        print_debug_log("Done copying devices list to temporary directory.")
+
         sleep(12)
 
 
 def scan_bt_devices():
+    print_debug_log("Trying to scan for nearby bluetooth devices...")
+
     try:
         bluetooth.discover_devices(
             duration=12,
@@ -102,6 +108,8 @@ def scan_bt_devices():
             "Exception in launch_daemon_scan_loop function: " +
             str(e)
         )
+
+    print_debug_log("Done scanning for nearby bluetooth devices.")
 
 
 def launch_daemon_scan_loop():
@@ -121,11 +129,11 @@ def connect_to_bt_device(device_mac):
     sock = bluetooth.BluetoothSocket(bluetooth.RFCOMM)
 
     try:
-        print_debug_log("Trying to connect to " + device_mac)
+        print_debug_log("Trying to connect to " + device_mac + "...")
 
         sock.connect((device_mac, 1))
 
-        print_debug_log("Done with " + device_mac + " connection")
+        print_debug_log("Done with " + device_mac + " connection.")
 
         # 0x1X for straight forward and 0x11 for very slow to 0x1F for fastest
         sock.send("\x1A")
