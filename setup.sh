@@ -1,8 +1,8 @@
 #!/bin/sh
 
 directory_path_kodi_addons=/home/pi/.kodi/addons
-directory_path_service_system=/etc/service/system
-directory_path_service_user=/etc/service/user
+directory_path_systemd_system=/etc/systemd/system
+directory_path_systemd_user=/etc/systemd/user
 directory_path_xsessions=/usr/share/xsessions
 directory_path_scripts=/home/pi/bin
 
@@ -11,8 +11,8 @@ directory_path_this_script=$(readlink -f "$(dirname "$0")")
 script_argument_primary="$1"
 
 list_addons=$(ls -1 $directory_path_this_script/addons)
-list_service_system=$(ls -1 $directory_path_this_script/service/system)
-list_service_user=$(ls -1 $directory_path_this_script/service/user)
+list_systemd_system=$(ls -1 $directory_path_this_script/systemd/system)
+list_systemd_user=$(ls -1 $directory_path_this_script/systemd/user)
 list_scripts=$(ls -1 $directory_path_this_script/bin)
 list_xsessions=$(ls -1 $directory_path_this_script/xsessions)
 
@@ -26,9 +26,9 @@ uninstall_xsessions ()
 
 uninstall_services_system ()
 {
-  for service in $list_service_system
+  for service in $list_systemd_system
   do
-    sudo rm $directory_path_service_system/$service
+    sudo rm $directory_path_systemd_system/$service
 
     sudo systemctl stop $service
   done
@@ -38,9 +38,9 @@ uninstall_services_system ()
 
 uninstall_services_system ()
 {
-  for service in $list_service_user
+  for service in $list_systemd_user
   do
-    sudo rm $directory_path_service_user/$service
+    sudo rm $directory_path_systemd_user/$service
 
     systemctl --user stop $service
   done
@@ -98,10 +98,10 @@ install_services_system ()
 {
   sudo -E systemctl import-environment BLUETOOTH_DEVICES_CONNECTOR_DEBUG
 
-  for service in $list_service_system
+  for service in $list_systemd_system
   do
-    sudo cp $directory_path_this_script/service/system/$service $directory_path_service_system
-    sudo chmod 664 $directory_path_service_system/$service
+    sudo cp $directory_path_this_script/systemd/system/$service $directory_path_systemd_system
+    sudo chmod 664 $directory_path_systemd_system/$service
 
     sudo systemctl start $service
   done
@@ -113,10 +113,10 @@ install_services_user ()
 {
   sudo -E systemctl import-environment BLUETOOTH_DEVICES_CONNECTOR_DEBUG
 
-  for service in $list_service_user
+  for service in $list_systemd_user
   do
-    sudo cp $directory_path_this_script/service/user/$service $directory_path_service_user
-    sudo chmod 664 $directory_path_service_user/$service
+    sudo cp $directory_path_this_script/systemd/user/$service $directory_path_systemd_user
+    sudo chmod 664 $directory_path_systemd_user/$service
 
     systemctl --user start $service
   done
