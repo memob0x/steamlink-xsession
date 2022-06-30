@@ -54,19 +54,19 @@ sh setup.sh uninstall
    It also automatically set steamlink as autologin xsession on service start and kodi on service stop, in order to resume the steamlink session on unhandled system shutdown.
 
    ```
-   sudo systemctl start steamlink.service
-   sudo systemctl stop steamlink.serviceststea
-   sudo systemctl status steamlink.service
-   journalctl -e -b -u steamlink.service
+   sudo systemctl start steamlink
+   sudo systemctl stop steamlink
+   sudo systemctl status steamlink
+   journalctl -e -b -u steamlink
    ```
 
 - **bluetooth devices auto-connector service**: tries to automatically pair and connect to the bluetooth devices set in the relative kodi addon settings panel
 
    ```
-   systemctl --user start bluetooth-devices-connector.service
-   systemctl --user stop bluetooth-devices-connector.service
-   systemctl --user status bluetooth-devices-connector.service
-   journalctl --user -e -b -u bluetooth-devices-connector.service
+   systemctl --user start bluetooth-devices-connector
+   systemctl --user stop bluetooth-devices-connector
+   systemctl --user status bluetooth-devices-connector
+   journalctl --user -e -b -u bluetooth-devices-connector
    ```
 
 - **kodi steamlink launcher addon**: allows the steamlink service to be launched from kodi

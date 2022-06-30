@@ -8,7 +8,7 @@ xbmcgui.Dialog().ok(
 )
 
 subprocess.call(
-    "python /home/pi/.kodi/addons/script.bluetooth-devices-connector/staticize.py",
+    "python /home/pi/.kodi/addons/script.bluetooth-devices-connector/staticize_settings.py",
 
     shell=True
 )
