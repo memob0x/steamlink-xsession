@@ -1,5 +1,19 @@
 #!/bin/sh
 
+poll_bt_service() {
+  while true;
+  do
+    if ! systemctl is-active --quiet bluetooth;
+    then
+      echo "bluetooth service is down, activating"
+
+      sudo systemctl restart bluetooth
+    fi
+
+    sleep 6
+  done
+}
+
 poll_connection() {
   echo $1
 
@@ -26,6 +40,8 @@ poll_scanning() {
     sleep 10
   done
 }
+
+poll_bt_service &
 
 poll_connection "$1" &
 

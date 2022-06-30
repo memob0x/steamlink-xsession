@@ -18,9 +18,6 @@ The project is designed to work with Kodi 19 on top of Raspbian [bullseye](https
       sudo apt install kodi kodi-peripheral-joystick steamlink tvheadend
       ```
 
-      ```
-      sudo python3 -m pip install pybluez
-      ```
    2. Launch the setup script with _install_ argument
 
       ```
