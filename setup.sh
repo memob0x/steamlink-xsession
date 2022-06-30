@@ -41,9 +41,9 @@ uninstall_services_user ()
     mkdir /home/pi/.config/systemd
   fi
 
-  if [ ! -d "$list_systemd_user" ];
+  if [ ! -d "$directory_path_systemd_user" ];
   then
-    mkdir $list_systemd_user
+    mkdir $directory_path_systemd_user
   fi
 
   for service in $list_systemd_user

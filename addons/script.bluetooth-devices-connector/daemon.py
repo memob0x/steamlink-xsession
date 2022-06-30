@@ -32,7 +32,7 @@ def scan_bt_devices():
 
     try:
         bluetooth.discover_devices(
-            duration=12,
+            duration=4,
             lookup_names=True,
             flush_cache=True,
             lookup_class=False
@@ -63,19 +63,14 @@ def connect_to_bt_device(device_mac):
         sock.connect((device_mac, 1))
 
         print_debug_log("Done with " + device_mac + " connection.")
-
-        # 0x1X for straight forward and 0x11 for very slow to 0x1F for fastest
-        sock.send("\x1A")
     except Exception as e:
         print_debug_log(
             "Exception in connect_to_bt_device function: " +
             str(e)
         )
 
-    sock.recv(1024)
 
-
-while True:
+def main():
     print_debug_log("Copying devices list to temporary directory...")
 
     copyfile(
@@ -86,12 +81,15 @@ while True:
 
     print_debug_log("Done copying devices list to temporary directory.")
 
-    scan_bt_devices()
+    #scan_bt_devices()
 
     for device_mac in get_devices_list_in_random_order():
         if len(device_mac) <= 0:
             continue
 
-        print_debug_log("Loop attempting to connect " + device_mac)
-
         connect_to_bt_device(device_mac)
+
+try:
+    main()
+except Exception as e:
+    exit()
