@@ -4,7 +4,7 @@ Description=Bluetooth devices auto-connector
 [Service]
 Type=oneshot
 
-ExecStart=/bin/sh /home/pi/.bin/connect_bluetooth_devices.sh "$(< /home/pi/.kodi/userdata/addon_data/script.bluetooth-devices-connector/devices)"
+ExecStart=/bin/bash -c "/bin/sh /home/pi/bin/connect_bluetooth_devices.sh \"$(< /home/pi/.kodi/userdata/addon_data/script.bluetooth-devices-connector/devices)\""
 
 [Install]
 WantedBy=multi-user.target

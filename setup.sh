@@ -102,8 +102,6 @@ install_bt_drivers ()
 
 install_services_system ()
 {
-  sudo -E systemctl import-environment BLUETOOTH_DEVICES_CONNECTOR_DEBUG
-
   for service in $list_systemd_system
   do
     sudo cp $directory_path_this_script/systemd/system/$service $directory_path_systemd_system
@@ -116,8 +114,6 @@ install_services_system ()
 
 install_services_user ()
 {
-  sudo -E systemctl import-environment BLUETOOTH_DEVICES_CONNECTOR_DEBUG
-
   for service in $list_systemd_user
   do
     sudo cp $directory_path_this_script/systemd/user/$service $directory_path_systemd_user

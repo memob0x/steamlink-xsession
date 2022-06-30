@@ -57,22 +57,16 @@ sh setup.sh uninstall
    sudo systemctl start steamlink.service
    sudo systemctl stop steamlink.serviceststea
    sudo systemctl status steamlink.service
+   journalctl -e -b -u steamlink.service
    ```
 
 - **bluetooth devices auto-connector service**: tries to automatically pair and connect to the bluetooth devices set in the relative kodi addon settings panel
 
    ```
-   sudo systemctl start bluetooth-devices-connector.service
-   sudo systemctl stop bluetooth-devices-connector.service
-   sudo systemctl status bluetooth-devices-connector.service
-   ```
-
-- **bluetooth devices auto-connector cron**: periodically checks that the bluetooth devices auto-connector service is running
-
-   ```
-   sudo systemctl start bluetooth-devices-connector.timer
-   sudo systemctl stop bluetooth-devices-connector.timer
-   sudo systemctl status bluetooth-devices-connector.timer
+   systemctl --user start bluetooth-devices-connector.service
+   systemctl --user stop bluetooth-devices-connector.service
+   systemctl --user status bluetooth-devices-connector.service
+   journalctl --user -e -b -u bluetooth-devices-connector.service
    ```
 
 - **kodi steamlink launcher addon**: allows the steamlink service to be launched from kodi
@@ -86,24 +80,4 @@ sh setup.sh uninstall
    ```
    ls /usr/lib/firmware/rtl_bt/rtl8761bu_config.bin
    ls /usr/lib/firmware/rtl_bt/rtl8761bu_fw.bin
-   ```
-
-## Debug bluetooth auto-connector service
-
-1. Export the logging flag environment variable
-
-   ```
-   export BLUETOOTH_DEVICES_CONNECTOR_DEBUG=1
-   ```
-
-2. Reinstall
-
-   ```
-   sh setup.sh install
-   ```
-
-3. Inspect the service output
-
-   ```
-   journalctl -e -b -u bluetooth-devices-connector.service
    ```
