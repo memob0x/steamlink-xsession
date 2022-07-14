@@ -1,10 +1,12 @@
 #!/bin/sh
 
-directory_path_kodi_addons=/home/pi/.kodi/addons
+username=$(whoami)
+
+directory_path_kodi_addons=/home/$username/.kodi/addons
 directory_path_systemd_system=/etc/systemd/system
-directory_path_systemd_user=/home/pi/.config/systemd/user
+directory_path_systemd_user=/home/$username/.config/systemd/user
 directory_path_xsessions=/usr/share/xsessions
-directory_path_scripts=/home/pi/bin
+directory_path_scripts=/home/$username/bin
 
 directory_path_this_script=$(readlink -f "$(dirname "$0")")
 
@@ -237,6 +239,8 @@ install_all ()
   install_scripts
 
   /bin/sh $directory_path_scripts/autologin.sh install steamlink
+
+  /bin/sh $directory_path_scripts/boot.sh set gpu_mem=512
 
   install_addons
 
