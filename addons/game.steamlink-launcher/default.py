@@ -3,4 +3,4 @@ import subprocess
 
 xbmc.executebuiltin('ActivateWindow(busydialognocancel)')
 
-subprocess.call(["sudo", "service", "steamlink", "start"])
+subprocess.call(["systemctl", "--user", "start", "steamlink.service"])

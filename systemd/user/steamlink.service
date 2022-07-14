@@ -1,0 +1,33 @@
+[Unit]
+Description=Steamlink service
+
+# steamlink is incompatible with X server under bullseye,
+# thus lightdm is marked as incompatible for this service,
+# this normally kills lightdm automatically,
+# but it doesn't seem to work for user services, it only works for system services
+# Conflicts=display-manager.service
+
+# restart lightdm if steamlink fails to launch,
+# same as "Conflicts", only works for system services
+# OnFailure=display-manager.service
+
+[Service]
+Type=simple
+
+# before launch pipeline:
+# - stop lightdm
+# - set steamlink autologin
+# - wait for runtime folder (necessary when starting steamlink on boot) # TODO: check if it's still necessary
+ExecStartPre=sh -c "sudo service lightdm stop && sh /home/$(whoami)/bin/autologin.sh install steamlink && while [ ! -d /run/user/$(id -u $(whoami))/pulse ]; do sleep 1; done && echo \"runtime folder is \"${XDG_RUNTIME_DIR}\"\""
+
+# launch pipeline:
+# - launch steamlink binary
+ExecStart=steamlink
+
+# on close pipeline:
+# - set kodi autologin
+# - restart lightdm
+#ExecStartPost=sh -c "sleep 1 && sh /home/$(whoami)/bin/autologin.sh install kodi && sleep 1 && sudo service lightdm restart"
+
+[Install]
+WantedBy=default.target

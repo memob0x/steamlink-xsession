@@ -51,10 +51,10 @@ sh setup.sh uninstall
    It also automatically set steamlink as autologin xsession on service start and kodi on service stop, in order to resume the steamlink session on unhandled system shutdown.
 
    ```
-   sudo systemctl start steamlink
-   sudo systemctl stop steamlink
-   sudo systemctl status steamlink
-   journalctl -e -b -u steamlink
+   systemctl --user stop steamlink.service
+   systemctl --user stop steamlink.service
+   systemctl --user status steamlink.service
+   journalctl --user -e -b -u steamlink.service
    ```
 
 - **kodi steamlink launcher addon**: allows the steamlink service to be launched from kodi
