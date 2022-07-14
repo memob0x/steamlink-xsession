@@ -15,7 +15,7 @@ The project is designed to work with Kodi 19 on top of Raspbian [bullseye](https
    1. Install the required system dependencies
 
       ```
-      sudo apt install kodi kodi-peripheral-joystick steamlink tvheadend
+      sudo apt install kodi kodi-peripheral-joystick joystick steamlink tvheadend
       ```
 
    2. Launch the setup script with _install_ argument
@@ -57,18 +57,7 @@ sh setup.sh uninstall
    journalctl -e -b -u steamlink
    ```
 
-- **bluetooth devices auto-connector service**: tries to automatically pair and connect to the bluetooth devices set in the relative kodi addon settings panel
-
-   ```
-   systemctl --user start bluetooth-devices-connector
-   systemctl --user stop bluetooth-devices-connector
-   systemctl --user status bluetooth-devices-connector
-   journalctl --user -e -b -u bluetooth-devices-connector
-   ```
-
 - **kodi steamlink launcher addon**: allows the steamlink service to be launched from kodi
-
-- **kodi bluetooth devices auto-connector addon**: allows the bluetooth auto-connector service to be launched from kodi; through its **settings** it's possible to manage the **list of MAC addresses** of the devices to be connected to.
 
 - **bluetooth 5 firmware files**: under Raspbian Bullseye these drivers are not present, since they are not easily discoverable online, these files are handled by the _setup_ script during the installation process.
 
