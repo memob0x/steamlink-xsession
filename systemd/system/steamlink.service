@@ -14,11 +14,9 @@ Type=simple
 
 User=pi
 
-ExecStartPre=/bin/sh /home/pi/bin/launch_steamlink_pre.sh
+ExecStart=sh /home/pi/bin/steamlink.sh launch
 
-ExecStart=/bin/sh /home/pi/bin/launch_steamlink.sh
-
-ExecStopPost=/bin/sh /home/pi/bin/launch_steamlink_post.sh
+ExecStop=sh /home/pi/bin/kodi.sh launch
 
 [Install]
 WantedBy=default.target
