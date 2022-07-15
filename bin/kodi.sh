@@ -12,10 +12,7 @@ fi
 launch(){
   echo "killing steamlink"
 
-  for pid in $(pgrep steamlink);
-  do
-    kill -9 $pid;
-  done
+  sh /home/$username/bin/steamlink.sh kill
 
   echo "setting kodi as autologin session"
 
