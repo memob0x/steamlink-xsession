@@ -10,12 +10,6 @@ Launch the setup script with _install_ argument
 sh setup.sh install
 ```
 
-For optimal performance disabling wi-fi module is suggested, it can be achieved by adding the following line to the `/boot/config.txt` file.
-
-```
-dtoverlay=disable-wifi
-```
-
 ## Uninstallation
 
 Launch the setup script with _uninstall_ argument
@@ -24,13 +18,27 @@ Launch the setup script with _uninstall_ argument
 sh setup.sh uninstall
 ```
 
+## Extra
+
+For optimal performance disabling wi-fi module is suggested, it can be achieved by adding the following line to the `/boot/config.txt` file.
+```
+dtoverlay=disable-wifi
+```
+
 ## Features
 
-- **autologin script**: changes lightdm autologin with ease
+- **autologin script**: changes lightdm autologin
 
    ```
    sh ~/bin/autologin.sh steamlink
    sh ~/bin/autologin.sh your_xsession_of_choice
+   ```
+
+- **boot script**: adds/edits `/boot/config.txt` properties
+
+   ```
+   sh ~/bin/boot.sh set_unique_property foo=bar # ensures only one "foo" property is set
+   sh ~/bin/boot.sh set_unique_property_and_value foo=bar # ensures only one "foo=bar" property is set
    ```
 
 - **steamlink xsession**: in order to let steamlink to be set as "autologin" session
