@@ -2,6 +2,12 @@
 
 Run steamlink without a window manager.
 
+## Constraints
+
+This project is designed to work on top of [Raspbian](https://www.raspberrypi.com/software/);
+
+it has been tested on Bullseye with LightDM as display manager, and "pi" as the default user.
+
 ## Installation
 
 Launch the setup script with _install_ argument
