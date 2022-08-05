@@ -20,6 +20,8 @@ sudo cp $file_path_lightdm_config $file_path_lightdm_config.backup
 if [ "$script_argument_primary" = "uninstall" ]
 then
   uninstall
+
+  exit 0
 fi
 
 if [ "$script_argument_primary" = "install" ]
@@ -39,4 +41,10 @@ then
   sudo sh -c "echo '#$string_lightdm_config_mark_suffix_end' >> $file_path_lightdm_config"
 
   sudo sh -c "echo '\n' >> $file_path_lightdm_config"
+
+  exit 0
 fi
+
+echo "Invalid argument supplied."
+
+exit 1
