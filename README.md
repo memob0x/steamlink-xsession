@@ -32,7 +32,7 @@ sh setup.sh uninstall
    sh ~/bin/autologin.sh your_xsession_of_choice
    ```
 
-- **boot script**: adds/edits `/boot/config.txt` properties
+- **boot script**: edits `/boot/config.txt` properties
 
    `set_unique_property` ensures only one property with the given name is set
 
@@ -78,6 +78,8 @@ sh setup.sh uninstall
 
 ## Extra
 
-For optimal performance disabling wi-fi module is suggested, it can be achieved by adding the following line to the `/b>```
+For optimal performance disabling wi-fi module is suggested, it can be achieved by adding the following line to the `/boot/config.txt` file.
+
+```
 dtoverlay=disable-wifi
 ```
