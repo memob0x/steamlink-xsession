@@ -18,27 +18,36 @@ Launch the setup script with _uninstall_ argument
 sh setup.sh uninstall
 ```
 
-## Extra
-
-For optimal performance disabling wi-fi module is suggested, it can be achieved by adding the following line to the `/boot/config.txt` file.
-```
-dtoverlay=disable-wifi
-```
-
 ## Features
 
 - **autologin script**: changes lightdm autologin
 
    ```
    sh ~/bin/autologin.sh steamlink
+   ```
+
+   It can be used with any valid session name.
+
+   ```
    sh ~/bin/autologin.sh your_xsession_of_choice
    ```
 
 - **boot script**: adds/edits `/boot/config.txt` properties
 
+   `set_unique_property` ensures only one property with the given name is set
+
+   The following command results in a single "foo" property in the whole config.txt file.
+
    ```
-   sh ~/bin/boot.sh set_unique_property foo=bar # ensures only one "foo" property is set
-   sh ~/bin/boot.sh set_unique_property_and_value foo=bar # ensures only one "foo=bar" property is set
+   sh ~/bin/boot.sh set_unique_property foo=bar
+   ```
+
+   `set_unique_property_and_value` ensures only one property with the given name and value is set
+
+   The following command might results in multiple "foo" properties with different values, but only one with "bar" as value in the whole config.txt file.
+
+   ```
+   sh ~/bin/boot.sh set_unique_property_and_value foo=bar
    ```
 
 - **steamlink xsession**: in order to let steamlink to be set as "autologin" session
@@ -66,3 +75,9 @@ dtoverlay=disable-wifi
    The following line is also automatically added to `/boot/config.txt` file (and not removed on uninstall) in order to force the system to use the forsaid bluetooth drivers only.
 
    `dtoverlay=disable-bt`
+
+## Extra
+
+For optimal performance disabling wi-fi module is suggested, it can be achieved by adding the following line to the `/b>```
+dtoverlay=disable-wifi
+```
