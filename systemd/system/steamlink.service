@@ -1,13 +1,9 @@
 [Unit]
 Description=Steamlink service
 
-# steamlink is incompatible with X server under bullseye,
-# thus lightdm is marked as incompatible for this service,
-# this normally kills lightdm automatically
 Conflicts=display-manager.service
 
-# restart lightdm if steamlink fails to launch
-OnFailure=display-manager.service
+Restart=on-failure
 
 [Service]
 Type=simple
@@ -15,8 +11,6 @@ Type=simple
 User=pi
 
 ExecStart=sh /home/pi/bin/steamlink.sh launch
-
-ExecStop=sh /home/pi/bin/kodi.sh launch
 
 [Install]
 WantedBy=default.target

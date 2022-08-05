@@ -2,7 +2,6 @@
 
 username=$(whoami)
 
-directory_path_kodi_addons=/home/$username/.kodi/addons
 directory_path_systemd_system=/etc/systemd/system
 directory_path_systemd_user=/home/$username/.config/systemd/user
 directory_path_xsessions=/usr/share/xsessions
@@ -12,13 +11,12 @@ directory_path_this_script=$(readlink -f "$(dirname "$0")")
 
 script_argument_primary="$1"
 
-list_addons=$(ls -1 $directory_path_this_script/addons)
 list_systemd_system=$(ls -1 $directory_path_this_script/systemd/system)
 list_systemd_user=$(ls -1 $directory_path_this_script/systemd/user)
 list_scripts=$(ls -1 $directory_path_this_script/bin)
 list_xsessions=$(ls -1 $directory_path_this_script/xsessions)
 
-list_systemd_autostart="bluetooth-devices-connector.service"
+list_systemd_autostart=""
 
 uninstall_xsessions ()
 {
@@ -97,18 +95,6 @@ uninstall_scripts ()
   done
 }
 
-uninstall_addons ()
-{
-  echo "uninstalling kodi addons"
-
-  for addon in $list_addons
-  do
-    echo "uninstalling kodi ${addon} addon"
-
-    rm -r $directory_path_kodi_addons/$addon
-  done
-}
-
 uninstall_all ()
 {
   /bin/sh $directory_path_scripts/autologin.sh uninstall
@@ -120,12 +106,19 @@ uninstall_all ()
   uninstall_services_user
 
   uninstall_scripts
-
-  uninstall_addons
 }
 
 install_bt_drivers ()
 {
+  if [ ];
+  then
+    echo "default bluetooth drivers are already disabled"
+  else
+    echo "disabling default bluetooth drivers"
+
+    /bin/sh $directory_path_scripts/boot.sh set_unique_property_and_value dtoverlay=disable-bt
+  fi
+
   echo "installing bluetooth drivers"
 
   # possibly install missing bluetooth 5 firmware
@@ -210,18 +203,6 @@ install_scripts ()
   done
 }
 
-install_addons ()
-{
-  echo "installing kodi addons"
-
-  for addon in $list_addons
-  do
-    echo "installing kodi addon ${addon}"
-
-    cp -r $directory_path_this_script/addons/$addon $directory_path_kodi_addons
-  done
-}
-
 install_xsessions ()
 {
   echo "installing xsessions"
@@ -236,13 +217,13 @@ install_xsessions ()
 
 install_all ()
 {
+  sudo apt install steamlink -y
+
   install_scripts
 
   /bin/sh $directory_path_scripts/autologin.sh install steamlink
 
-  /bin/sh $directory_path_scripts/boot.sh set gpu_mem=512
-
-  install_addons
+  /bin/sh $directory_path_scripts/boot.sh set_unique_property gpu_mem=512
 
   install_xsessions
 
