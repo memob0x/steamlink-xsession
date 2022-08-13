@@ -4,9 +4,7 @@ Run steamlink without a window manager.
 
 ## Constraints
 
-This project is designed to work on top of [Raspbian](https://www.raspberrypi.com/software/);
-
-it has been tested on Bullseye with LightDM as display manager, and "pi" as the default user.
+This project has been tested on a Raspberry Pi 3 default installation only, which should consist in [Raspbian](https://www.raspberrypi.com/software/) Bullseye with LightDM as display manager, and "pi" as the default user.
 
 ## Installation
 
@@ -26,19 +24,27 @@ sh setup.sh uninstall
 
 ## Features
 
-- **autologin script**: changes lightdm autologin
+- **autologin shell script**: changes lightdm autologin
+
+   `install` sets the given xsession name as autologin.
 
    ```
-   sh ~/bin/autologin.sh steamlink
+   sh ~/bin/autologin.sh install steamlink
    ```
 
    It can be used with any valid session name.
 
    ```
-   sh ~/bin/autologin.sh your_xsession_of_choice
+   sh ~/bin/autologin.sh install your_xsession_of_choice
    ```
 
-- **boot script**: edits `/boot/config.txt` properties
+   `uninstall` removes any previously set xsession autologin.
+
+   ```
+   sh ~/bin/autologin.sh uninstall
+   ```
+
+- **boot shell script**: edits `/boot/config.txt` properties
 
    `set_unique_property` ensures only one property with the given name is set
 
@@ -55,12 +61,26 @@ sh setup.sh uninstall
    ```
    sh ~/bin/boot.sh set_unique_property_and_value foo=bar
    ```
+   
+- **steamlink shell script**: handles steamlink execution
+
+   `launch` ensures steamlink starts, switches off the window manager and runs steamlink.
+
+   It also automatically set steamlink as autologin xsession on service start in order to resume the steamlink session on unhandled system shutdown.
+
+   ```
+   sh ~/bin/steamlink.sh launch
+   ```
+
+   `kill` ensures steamlink exists
+
+   ```
+   sh ~/bin/steamlink.sh kill
+   ```
 
 - **steamlink xsession**: in order to let steamlink to be set as "autologin" session
 
-- **steamlink service**: switches off the window manager and runs steamlink, then, on steamlink exit, restart the window manager.
-
-   It also automatically set steamlink as autologin xsession on service start in order to resume the steamlink session on unhandled system shutdown.
+- **steamlink service**: a systemd steamlink shell script shortcut
 
    ```
    systemctl stop steamlink.service
