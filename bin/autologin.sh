@@ -36,7 +36,10 @@ then
 
   sudo sh -c "echo autologin-user=$(whoami) >> $file_path_lightdm_config"
 
-  sudo sh -c "echo autologin-session=$script_argument_secondary >> $file_path_lightdm_config"
+  if [ ! -z "$script_argument_secondary" ]
+  then
+    sudo sh -c "echo autologin-session=$script_argument_secondary >> $file_path_lightdm_config"
+  fi
 
   sudo sh -c "echo '#$string_lightdm_config_mark_suffix_end' >> $file_path_lightdm_config"
 

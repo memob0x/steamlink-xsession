@@ -110,7 +110,7 @@ uninstall_all ()
 
 install_bt_drivers ()
 {
-  if [ ];
+  if [ $(cat /boot/config.txt | grep -c "dtoverlay=disable-bt") ];
   then
     echo "default bluetooth drivers are already disabled"
   else
@@ -217,7 +217,7 @@ install_xsessions ()
 
 install_all ()
 {
-  sudo apt install steamlink -y
+  sudo apt install steamlink qjoypad -y
 
   install_scripts
 
@@ -237,6 +237,8 @@ install_all ()
 if [ "$script_argument_primary" = "uninstall" ]
 then
   uninstall_all
+
+  exit 0
 fi
 
 if [ "$script_argument_primary" = "install" ]
@@ -244,4 +246,10 @@ then
   uninstall_all
 
   install_all
-fi 
+
+  exit 0
+fi
+
+echo "invalid command provided"
+
+exit 1

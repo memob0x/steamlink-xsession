@@ -129,6 +129,18 @@ then
   exit 0
 fi
 
+if [ "${1}" = "exit" ];
+then
+  kill_steamlink
+
+  # set autologin=pi without session
+  sh /home/$username/bin/autologin.sh install
+
+  sudo service lightdm restart
+
+  exit 0
+fi
+
 echo "Invalid argument supplied."
 
 exit 1

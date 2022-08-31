@@ -12,5 +12,7 @@ User=pi
 
 ExecStart=sh /home/pi/bin/steamlink.sh launch
 
+ExecStop=sh /home/pi/bin/steamlink.sh exit
+
 [Install]
 WantedBy=default.target
