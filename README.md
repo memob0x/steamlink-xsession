@@ -61,7 +61,7 @@ sh setup.sh uninstall
    ```
    sh ~/bin/boot.sh set_unique_property_and_value foo=bar
    ```
-   
+
 - **steamlink shell script**: handles steamlink execution
 
    `launch` ensures steamlink starts, switches off the window manager and runs steamlink.
@@ -70,6 +70,12 @@ sh setup.sh uninstall
 
    ```
    sh ~/bin/steamlink.sh launch
+   ```
+
+   `exit` exits steamlink and restarts lightdm with autologin
+
+   ```
+   sh ~/bin/steamlink.sh exit
    ```
 
    `kill` ensures steamlink exists
