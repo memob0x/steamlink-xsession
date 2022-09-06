@@ -217,7 +217,7 @@ install_xsessions ()
 
 install_all ()
 {
-  sudo apt install steamlink qjoypad -y
+  sudo apt install steamlink -y
 
   install_scripts
 
