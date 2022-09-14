@@ -1,6 +1,6 @@
 # steamlink-xsession
 
-Steamlink as an [X session](https://wiki.debian.org/Xsession).
+Steamlink as an [X](https://en.wikipedia.org/wiki/X_Window_System) [session](https://en.wikipedia.org/wiki/X_session_manager).
 
 ## (Un)Installation
 
