@@ -8,11 +8,11 @@ Restart=on-failure
 [Service]
 Type=simple
 
-User=pi
+User=__USERNAME__
 
 ExecStart=sh /home/pi/bin/steamlink.sh launch
 
-ExecStop=sh /home/pi/bin/steamlink.sh exit
+ExecStop=sh /home/pi/bin/steamlink.sh kill
 
 [Install]
 WantedBy=default.target

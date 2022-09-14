@@ -36,23 +36,6 @@ launch(){
   echo "userid ${userid}"
 
 
-  if [ "$(systemctl is-active lightdm.service)" = "active" ];
-  then
-    echo "stopping lightdm"
-
-    sudo service lightdm stop
-
-    echo "lightdm stopped"
-  fi
-
-
-  echo "setting steamlink as autologin session"
-
-  sh /home/$username/bin/autologin.sh install steamlink
-
-  tail /etc/lightdm/lightdm.conf
-
-
   echo "setting XDG_RUNTIME_DIR env var"
 
   export XDG_RUNTIME_DIR=/run/user/$userid
@@ -125,18 +108,6 @@ fi
 if [ "${1}" = "kill" ];
 then
   kill_steamlink
-
-  exit 0
-fi
-
-if [ "${1}" = "exit" ];
-then
-  kill_steamlink
-
-  # set autologin=pi without session
-  sh /home/$username/bin/autologin.sh install
-
-  sudo service lightdm restart
 
   exit 0
 fi
