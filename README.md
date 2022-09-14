@@ -1,6 +1,6 @@
-# steamlink-standalone
+# steamlink-xsession
 
-Run steamlink as an [X session](https://wiki.debian.org/Xsession).
+Steamlink as an [X session](https://wiki.debian.org/Xsession).
 
 ## (Un)Installation
 
