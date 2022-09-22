@@ -2,7 +2,7 @@
 
 directory_path_services=/etc/systemd/user
 directory_path_xsessions=/usr/share/xsessions
-directory_path_scripts=/home/$(whoami)/bin
+directory_path_scripts=/usr/bin/
 
 directory_path_this_script=$(readlink -f "$(dirname "$0")")
 
@@ -12,7 +12,7 @@ if [ "$script_argument_primary" = "uninstall" ]
 then
   echo "removing script";
 
-  rm $directory_path_scripts/steamlink.sh
+  sudo rm $directory_path_scripts/steamlink.sh
 
   echo "removing x session";
 
@@ -28,12 +28,10 @@ then
 fi
 
 if [ "$script_argument_primary" = "install" ]
-then
-  mkdir -p $directory_path_scripts
-  
+then  
   echo "copying script";
 
-  cp $directory_path_this_script/steamlink.sh $directory_path_scripts
+  sudo cp $directory_path_this_script/steamlink.sh $directory_path_scripts
   
   echo "copying x session";
 
