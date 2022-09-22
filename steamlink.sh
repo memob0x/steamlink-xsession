@@ -35,13 +35,11 @@ launch(){
 
   echo "userid ${userid}"
 
-
   echo "setting XDG_RUNTIME_DIR env var"
 
   export XDG_RUNTIME_DIR=/run/user/$userid
 
   echo "runtime folder is ${XDG_RUNTIME_DIR}"
-
 
   echo "launching steamlink"
 

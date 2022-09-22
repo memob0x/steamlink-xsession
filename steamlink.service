@@ -8,11 +8,9 @@ Restart=on-failure
 [Service]
 Type=simple
 
-User=__USERNAME__
+ExecStart=sudo -u $(whoami) sh /home/pi/bin/steamlink.sh launch
 
-ExecStart=sh /home/pi/bin/steamlink.sh launch
-
-ExecStop=sh /home/pi/bin/steamlink.sh kill
+ExecStop=sudo -u $(whoami) sh /home/pi/bin/steamlink.sh kill
 
 [Install]
 WantedBy=default.target
